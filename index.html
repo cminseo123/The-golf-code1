@@ -437,189 +437,410 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    // --- 1. [자동 생성] 번역 사전 (i18n Dictionary) ---
+    // ⚠️ AI 초벌 번역입니다. 민서님이 직접 뉘앙스를 다듬어주세요!
+    const translations = {
+        "page_title": {
+            ko: "The Golf Code: AI, 골프의 '감'을 '코드'로 바꾸다",
+            en: "The Golf Code: AI, Turning Golf 'Feel' into 'Code'"
+        },
+        "nav_problem": { ko: "문제 정의", en: "Problem" },
+        "nav_solution": { ko: "솔루션", en: "Solution" },
+        "nav_tech": { ko: "기술 스택", en: "Tech Stack" },
+        "nav_roadmap": { ko: "로드맵", en: "Roadmap" },
+        "nav_ask": { ko: "The Ask", en: "The Ask" },
+        "hero_subtitle": {
+            ko: "AI, 골프의 '감(感)'을 '코드'로 바꾸다",
+            en: "AI, Turning Golf 'Feel' into 'Code'"
+        },
+        "hero_description": {
+            ko: "KPGA 프로가 직접 개발한 데이터 기반 스윙 분석 및 코칭 플랫폼",
+            en: "Data-Driven Swing Analysis & Coaching Platform Developed by a KPGA Pro"
+        },
+        "hero_profile_name": { ko: "조민서", en: "Cho Min-seo" },
+        "hero_profile_line1": {
+            ko: "<span class=\"font-semibold text-emerald-400\">소속:</span> 용인대학교 골프학과 / KPGA 프로",
+            en: "<span class=\"font-semibold text-emerald-400\">Affiliation:</span> Yongin Univ. Dept. of Golf / KPGA Pro"
+        },
+        "hero_profile_line2": {
+            ko: "<span class=\"font-semibold text-emerald-400\">채널:</span> 크리에이터 '도전골퍼 조민서'",
+            en: "<span class=\"font-semibold text-emerald-400\">Channel:</span> Creator 'Challenger Golfer Cho Min-seo'"
+        },
+        "hero_profile_line3": {
+            ko: "<span class=\"font-semibold text-emerald-400\">수상:</span> LG U+ & YouTube '유쓰 쇼츠 페스티벌' 대상",
+            en: "<span class=\"font-semibold text-emerald-400\">Award:</span> LG U+ & YouTube 'Uth Shorts Festival' Grand Prize"
+        },
+        "problem_title": {
+            ko: "\"왜 우리는 매일 연습해도<br>제자리걸음일까요?\"",
+            en: "\"Why are we stuck in place<br>even after practicing every day?\""
+        },
+        "problem_subtitle1": { ko: "KPGA 프로로서 느낀 한계", en: "Limitations Felt as a KPGA Pro" },
+        "problem_list1_item1": { ko: "투어 성적의 벽, 끊임없는 스윙 교정의 어려움", en: "The wall of tour performance, difficulty in continuous swing correction" },
+        "problem_list1_item2": { ko: "\"내 스윙의 문제를 '감'이 아닌 객관적인 데이터로 보고 싶다!\"", en: "\"I want to see my swing problems with objective data, not just 'feel'!\"" },
+        "problem_subtitle2": { ko: "아마추어 골퍼의 현실", en: "The Reality for Amateur Golfers" },
+        "problem_list2_item1": {
+            ko: "<span class=\"font-semibold text-gray-200\">정보 비대칭:</span> 고가의 레슨 없이는 정확한 피드백 부재",
+            en: "<span class=\"font-semibold text-gray-200\">Information Asymmetry:</span> Lack of accurate feedback without expensive lessons"
+        },
+        "problem_list2_item2": {
+            ko: "<span class=\"font-semibold text-gray-200\">잘못된 연습:</span> 감에 의존 → 잘못된 습관 고착화 → 실력 정체, 흥미 저하",
+            en: "<span class=\"font-semibold text-gray-200\">Incorrect Practice:</span> Relying on feel → Bad habits forming → Stagnant skills, loss of interest"
+        },
+        "solution_title": { ko: "Solution: 당신의 스윙 코드를 해독하다", en: "Solution: Decrypting Your Swing Code" },
+        "solution_description": {
+            ko: "'The Golf Code' (v0.1) - 영상만 올리면, AI가 당신의 스윙 데이터를 시각적으로 분석해 드립니다.",
+            en: "'The Golf Code' (v0.1) - Just upload a video, and AI will visually analyze your swing data."
+        },
+        "solution_card1_title": { ko: "AI 자동 분석", en: "AI Automatic Analysis" },
+        "solution_card1_desc": { ko: "MediaPipe 기반 자세 추정을 통해 스윙의 모든 관절을 정밀하게 트래킹합니다.", en: "Accurately tracks all swing joints through MediaPipe-based pose estimation." },
+        "solution_card2_title": { ko: "핵심 문제 시각화", en: "Core Problem Visualization" },
+        "solution_card2_desc": { ko: "머리 움직임(원), 손 궤적(곡선), 스윙 플레인(선) 등 핵심 문제를 직관적으로 보여줍니다.", en: "Intuitively shows core problems like head movement (circle), hand path (curve), and swing plane (line)." },
+        "solution_card3_title": { ko: "자세 안정성 점수 & 개선 방향", en: "Posture Stability Score & Improvements" },
+        "solution_card3_desc": { ko: "AI가 분석한 당신의 스윙 안정성을 점수로 보여드립니다.", en: "Shows your swing stability, analyzed by AI, as a score." },
+        "solution_card4_title": { ko: "데이터 리포트", en: "Data Report" },
+        "solution_card4_desc": { ko: "스윙의 일관성과 안정성을 데이터로 정량화하여 리포트를 제공합니다.", en: "Provides a report by quantifying swing consistency and stability with data." },
+        "solution_score_label": { ko: "자세 안정성 점수", en: "Posture Stability Score" },
+        "solution_demo_title": { ko: "Live Demo", en: "Live Demo" },
+        "solution_demo_desc": { ko: "QR 코드를 스캔하거나 아래 링크를 방문해 직접 체험해 보세요.", en: "Scan the QR code or visit the link below to try it yourself." },
+        "tech_title": {
+            ko: "From Scratch:<br>골프 프로, 코드를 배우다",
+            en: "From Scratch:<br>A Golf Pro Learns to Code"
+        },
+        "tech_description": { ko: "\"필드의 문제를 해결하기 위해, 직접 기술을 연마했습니다.\"", en: "\"To solve problems on the field, I learned the technology myself.\"" },
+        "tech_stack_title": { ko: "사용한 핵심 기술:", en: "Core Technologies Used:" },
+        "tech_process_title": { ko: "개발 과정 하이라이트:", en: "Development Process Highlights:" },
+        "tech_process_item1": {
+            ko: "<strong class=\"text-gray-200\">아이디어 구체화:</strong> KPGA 프로 경험 기반 핵심 분석 지표 정의",
+            en: "<strong class=\"text-gray-200\">Idea Definition:</strong> Defining key analysis metrics based on KPGA Pro experience"
+        },
+        "tech_process_item2": {
+            ko: "<strong class=\"text-gray-200\">기술 학습 & 구현:</strong> 비전공자로서 Python, AI 라이브러리 학습 및 프로토타입 개발",
+            en: "<strong class=\"text-gray-200\">Tech Learning & Implementation:</strong> As a non-major, learned Python, AI libraries, and developed a prototype"
+        },
+        "tech_process_item3": {
+            ko: "<strong class=\"text-gray-200\">문제 해결 & 개선:</strong> 화면 떨림 버그(v15) 해결, 사용자 피드백 기반 시각화 개선(v17) → 실행력 증명",
+            en: "<strong class=\"text-gray-200\">Problem Solving & Improvement:</strong> Fixed screen jitter bug (v15), improved visualization based on user feedback (v17) → Proving execution"
+        },
+        "comp_title": { ko: "Why 'The Golf Code'? 우리의 차별점", en: "Why 'The Golf Code'? Our Differentiation" },
+        "comp_description": { ko: "\"우리는 단순 분석기가 아닌, 당신의 잠재력을 코드로 풀어내는 성장 파트너입니다.\"", en: "\"We are not just an analyzer; we are a growth partner that decodes your potential.\"" },
+        "comp_table_header1": { ko: "구분", en: "Category" },
+        "comp_table_header2": { ko: "기존 솔루션 (레슨, 앱)", en: "Existing Solutions (Lessons, Apps)" },
+        "comp_table_header3": { ko: "The Golf Code", en: "The Golf Code" },
+        "comp_table_row1_header": { ko: "분석 주체", en: "Analysis Subject" },
+        "comp_table_row1_cell1": { ko: "코치의 주관적 판단 / AI의 '결과' 통보", en: "Coach's subjective judgment / AI's 'result' notification" },
+        "comp_table_row1_cell2": { ko: "KPGA 프로의 통찰력 + AI의 객관적 데이터", en: "KPGA Pro's insight + AI's objective data" },
+        "comp_table_row2_header": { ko: "피드백 방식", en: "Feedback Method" },
+        "comp_table_row2_cell1": { ko: "말 또는 단순 텍스트", en: "Verbal or simple text" },
+        "comp_table_row2_cell2": { ko: "데이터 기반 시각화 ('왜'인지 증명)", en: "Data-driven visualization (Proving 'why')" },
+        "comp_table_row3_header": { ko: "핵심 가치", en: "Core Value" },
+        "comp_table_row3_cell1": { ko: "단발성 레슨 / 범용 분석 기능", en: "One-time lessons / General analysis features" },
+        "comp_table_row3_cell2": { ko: "지속 가능한 '성장 경험' 설계 (개인화, 게임화)", en: "Designing a sustainable 'growth experience' (Personalization, Gamification)" },
+        "roadmap_title": { ko: "From MVP to Platform: 우리의 성장 로드맵", en: "From MVP to Platform: Our Growth Roadmap" },
+        "roadmap_description": { ko: "단기 검증을 거쳐, 골퍼를 위한 필수 성장 플랫폼으로 나아갑니다.", en: "After short-term validation, we will move towards an essential growth platform for golfers." },
+        "roadmap_plan_title": { ko: "시장 검증 계획 (단기: ~3개월)", en: "Market Validation Plan (Short-term: ~3 Months)" },
+        "roadmap_plan_item1_title": { ko: "10명 심층 인터뷰", en: "10 In-depth Interviews" },
+        "roadmap_plan_item1_desc": { ko: "핵심 가치 및 지불 의향(WTP) 검증 (NPS, 가짜 문 테스트 전환율 목표 설정)", en: "Validate core value and Willingness to Pay (WTP) (Set NPS, Fake Door test conversion goals)" },
+        "roadmap_plan_item2_title": { ko: "'가짜 문' 테스트 실행", en: "Execute 'Fake Door' Test" },
+        "roadmap_plan_item2_desc": { ko: "핵심 유료 기능에 대한 시장 수요(관심도)를 정량적 데이터(전환율 %)로 측정)", en: "Measure market demand (interest) for core paid features with quantitative data (conversion rate %)" },
+        "roadmap_plan_item3_title": { ko: "사용 데이터 초기 분석", en: "Initial Usage Data Analysis" },
+        "roadmap_plan_item3_desc": { ko: "실제 사용 패턴을 파악하고, 어떤 문제점을 가진 사용자들이 우리 앱을 주로 사용하는지 초기 사용자 페르소나 정의)", en: "Identify actual usage patterns and define initial user personas based on who is using our app for what problems)" },
+        "roadmap_growth_title": { ko: "성장 로드맵", en: "Growth Roadmap" },
+        "roadmap_growth_item1_title": { ko: "MVP (~6개월)", en: "MVP (~6 Months)" },
+        "roadmap_growth_item1_desc": { ko: "'자세 안정성 분석' MVP 고도화 (웹), 초기 사용자 확보", en: "Refine 'Posture Stability Analysis' MVP (Web), acquire initial users" },
+        "roadmap_growth_item2_title": { ko: "V2 (~1년)", en: "V2 (~1 Year)" },
+        "roadmap_growth_item2_desc": { ko: "핵심 팀 빌딩 (앱 개발자, 디자이너), Firebase 기반 정식 앱 런칭, '성장 기록 & 게임화' 도입", en: "Core team building (App Developer, Designer), Official app launch (Firebase-based), Introduce 'Growth Log & Gamification'" },
+        "roadmap_growth_item3_title": { ko: "V3 (1년~)", en: "V3 (1+ Year)" },
+        "roadmap_growth_item3_desc": { ko: "자체 딥러닝 모델 개발 (스윙 DNA, 클럽 패스 추정 등), O2O 코치 매칭 플랫폼 확장", en: "Develop proprietary deep learning models (Swing DNA, Club Path Estimation, etc.), Expand to O2O coach matching platform" },
+        "ask_title": {
+            ko: "함께 'The Golf Code'를 완성할<br>조력자를 찾습니다",
+            en: "Seeking collaborators to complete<br>'The Golf Code' together"
+        },
+        "ask_description": { ko: "\"기술적 깊이를 더하고, 지속 가능한 성장을 위한 발판을 마련하고 싶습니다.\"", en: "\"We want to add technical depth and establish a foundation for sustainable growth.\"" },
+        "ask_priority1_label": { ko: "1순위", en: "Priority 1" },
+        "ask_priority1_title": { ko: "시스템 실행 가속화", en: "Accelerate System Execution" },
+        "ask_priority1_desc": { ko: "확장형 API 아키텍처 설계 검토 및 Backend/DL 엔지니어의 팀 합류 요청", en: "Request for scalable API architecture design review and for Backend/DL Engineers to join the team" },
+        "ask_priority2_label": { ko: "2순위", en: "Priority 2" },
+        "ask_priority2_title": { ko: "AI기술 검증", en: "AI Technology Validation" },
+        "ask_priority2_desc": { ko: "AI의 기술적/학술적 정확도 검증 및 고도화를 위한 Visual AI 연구 파트너십 모색", en: "Seeking Visual AI research partnership for technical/academic validation and advancement of AI" },
+        "ask_priority3_label": { ko: "3순위", en: "Priority 3" },
+        "ask_priority3_title": { ko: "성장 네트워크 연계", en: "Growth Network Connection" },
+        "ask_priority3_desc": { ko: "창업 지원 프로그램 연계 및 핵심 인력(Mobile App Developer 등) 네트워킹", en: "Connection to startup support programs and networking for key personnel (e.g., Mobile App Developer)" },
+        "footer_title": { ko: "감사합니다.", en: "Thank You." },
+        "footer_name": { ko: "조민서", en: "Cho Min-seo" },
+        "footer_subtitle": { ko: "KPGA 프로 / 'The Golf Code' 개발자", en: "KPGA Pro / 'The Golf Code' Developer" },
+        "footer_contact_email": {
+            ko: "<span class=\"font-semibold text-emerald-400\">Email:</span> TheGolfCode.AI@gmaail.com",
+            en: "<span class=\"font-semibold text-emerald-400\">Email:</span> TheGolfCode.AI@gmaail.com"
+        },
+        "footer_contact_qa": {
+            ko: "<span class=\"font-semibold text-emerald-400\">Q&A:</span> 질문을 기다립니다.",
+            en: "<span class=\"font-semibold text-emerald-400\">Q&A:</span> Awaiting your questions."
+        },
+        "footer_qr1_label": { ko: "Live Demo", en: "Live Demo" },
+        "footer_qr2_label": { ko: "'도전골퍼 조민서'", en: "'Challenger Golfer Cho Min-seo'" },
+        "footer_copyright": {
+            ko: "&copy; 2025 The Golf Code by Minseo Cho. All rights reserved.",
+            en: "&copy; 2025 The Golf Code by Minseo Cho. All rights reserved."
+        },
 
-            let chartInitialized = false;
-            const chartCanvas = document.getElementById('handHeightChart');
+        // --- 차트(Chart.js) 관련 번역 ---
+        "chart_title": {
+            ko: "손 높이 그래프 (Backswing vs Downswing)",
+            en: "Hand Height Graph (Backswing vs Downswing)"
+        },
+        "chart_labels": {
+            ko: ['어드레스', '테이크어웨이', '하프웨이 백', '탑', '하프웨이 다운', '임팩트', '피니시'],
+            en: ['Address', 'Takeaway', 'Halfway Back', 'Top', 'Halfway Down', 'Impact', 'Finish']
+        },
+        "chart_backswing": { ko: "백스윙", en: "Backswing" },
+        "chart_downswing": { ko: "다운스윙", en: "Downswing" }
+    };
 
-            // --- 1. 차트 그리기 함수 ---
-            const drawChart = () => {
-                if (chartInitialized) return; // 이미 그려졌으면 실행 안 함
-                chartInitialized = true;
-                
-                const ctx = chartCanvas.getContext('2d');
-                const gradientBackswing = ctx.createLinearGradient(0, 0, 0, 300);
-                gradientBackswing.addColorStop(0, 'rgba(5, 150, 105, 0.6)');
-                gradientBackswing.addColorStop(1, 'rgba(5, 150, 105, 0.05)');
-                const gradientDownswing = ctx.createLinearGradient(0, 0, 0, 300);
-                gradientDownswing.addColorStop(0, 'rgba(59, 130, 246, 0.6)');
-                gradientDownswing.addColorStop(1, 'rgba(59, 130, 246, 0.05)');
+    // --- 2. 전역 변수 설정 ---
+    let currentLang = 'ko'; // 기본 언어
+    let handHeightChartInstance = null; // 차트 객체를 저장할 변수
+    let chartInitialized = false; // 차트가 그려졌는지 여부
+    const chartCanvas = document.getElementById('handHeightChart');
 
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Address', 'Takeaway', 'Halfway Back', 'Top', 'Halfway Down', 'Impact', 'Finish'],
-                        datasets: [
-                            { label: 'Backswing', data: [10, 20, 50, 80, null, null, null], borderColor: '#10B981', backgroundColor: gradientBackswing, fill: 'origin', tension: 0.3, pointBackgroundColor: '#10B981', pointBorderColor: '#ffffff', pointRadius: 4, pointHoverRadius: 6 },
-                            { label: 'Downswing', data: [null, null, null, 80, 45, 10, 75], borderColor: '#3B82F6', backgroundColor: gradientDownswing, fill: 'origin', tension: 0.3, pointBackgroundColor: '#3B82F6', pointBorderColor: '#ffffff', pointRadius: 4, pointHoverRadius: 6 }
-                        ]
+    // --- 3. 번역 실행 함수 ---
+    const translatePage = (lang) => {
+        if (!lang) lang = 'ko'; // 기본값
+        currentLang = lang; // 현재 언어 업데이트
+        localStorage.setItem('golf-code-lang', lang); // 사용자의 언어 선택 저장
+
+        // 모든 [data-i18n-key] 요소를 찾아서 번역
+        document.querySelectorAll('[data-i18n-key]').forEach(el => {
+            const key = el.getAttribute('data-i18n-key');
+            if (translations[key] && translations[key][lang]) {
+                el.innerHTML = translations[key][lang];
+            }
+        });
+
+        // 페이지 제목 번역
+        const titleKey = document.title.getAttribute('data-i18n-key') || 'page_title';
+        if (translations[titleKey] && translations[titleKey][lang]) {
+             document.title = translations[titleKey][lang];
+        }
+        
+        // 차트가 이미 그려졌다면, 새 언어로 다시 그리기
+        if (chartInitialized) {
+            drawChart(lang);
+        }
+        
+        // 언어 버튼 스타일 업데이트
+        updateLangButtons(lang);
+    };
+    
+    // --- 4. 언어 버튼 스타일 업데이트 함수 ---
+    const updateLangButtons = (lang) => {
+         const koButton = document.getElementById('lang-ko');
+         const enButton = document.getElementById('lang-en');
+         
+         if (!koButton || !enButton) return;
+
+         if (lang === 'ko') {
+            koButton.classList.remove('text-gray-400', 'hover:text-white');
+            koButton.classList.add('text-white', 'font-semibold');
+            enButton.classList.remove('text-white', 'font-semibold');
+            enButton.classList.add('text-gray-400', 'hover:text-white');
+         } else {
+            enButton.classList.remove('text-gray-400', 'hover:text-white');
+            enButton.classList.add('text-white', 'font-semibold');
+            koButton.classList.remove('text-white', 'font-semibold');
+            koButton.classList.add('text-gray-400', 'hover:text-white');
+         }
+    };
+
+    // --- 5. [수정된] 차트 그리기 함수 ---
+    const drawChart = (lang) => {
+        if (!chartCanvas) return;
+        
+        // 번역이 준비되었는지 확인
+        if (!translations.chart_labels || !translations.chart_labels[lang]) {
+            console.warn("Chart translations not ready, retrying...");
+            setTimeout(() => drawChart(lang), 100);
+            return;
+        }
+
+        if (handHeightChartInstance) {
+            handHeightChartInstance.destroy(); // 기존 차트 파괴
+        }
+        chartInitialized = true;
+
+        const ctx = chartCanvas.getContext('2d');
+        const gradientBackswing = ctx.createLinearGradient(0, 0, 0, 300);
+        gradientBackswing.addColorStop(0, 'rgba(5, 150, 105, 0.6)');
+        gradientBackswing.addColorStop(1, 'rgba(5, 150, 105, 0.05)');
+        const gradientDownswing = ctx.createLinearGradient(0, 0, 0, 300);
+        gradientDownswing.addColorStop(0, 'rgba(59, 130, 246, 0.6)');
+        gradientDownswing.addColorStop(1, 'rgba(59, 130, 246, 0.05)');
+
+        handHeightChartInstance = new Chart(ctx, { 
+            type: 'line',
+            data: {
+                labels: translations.chart_labels[lang],
+                datasets: [
+                    {
+                        label: translations.chart_backswing[lang],
+                        data: [10, 20, 50, 80, null, null, null],
+                        borderColor: '#10B981', backgroundColor: gradientBackswing, fill: 'origin', tension: 0.3, pointBackgroundColor: '#10B981', pointBorderColor: '#ffffff', pointRadius: 4, pointHoverRadius: 6
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        animation: { duration: 1500, easing: 'easeInOutQuad' }, // '그려지는' 애니메이션
-                        scales: {
-                            y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#9CA3AF' } },
-                            x: { grid: { display: false }, ticks: { color: '#9CA3AF' } }
-                        },
-                        plugins: {
-                            legend: { labels: { color: '#D1D5DB' } },
-                            tooltip: { enabled: false, mode: 'index', intersect: false, backgroundColor: 'rgba(31, 41, 55, 0.9)', titleColor: '#10B981', bodyColor: '#FFFFFF', borderColor: '#374151', borderWidth: 1, padding: 12, cornerRadius: 8 }
-                        },
-                        interaction: { mode: 'index', intersect: false },
+                    {
+                        label: translations.chart_downswing[lang],
+                        data: [null, null, null, 80, 45, 10, 75],
+                        borderColor: '#3B82F6', backgroundColor: gradientDownswing, fill: 'origin', tension: 0.3, pointBackgroundColor: '#3B82F6', pointBorderColor: '#ffffff', pointRadius: 4, pointHoverRadius: 6
                     }
-                });
-            };
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                animation: { duration: 1000, easing: 'easeInOutQuad' }, 
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#9CA3AF' } },
+                    x: { grid: { display: false }, ticks: { color: '#9CA3AF' } }
+                },
+                plugins: {
+                    legend: { labels: { color: '#D1D5DB' } },
+                    tooltip: { enabled: false, mode: 'index', intersect: false, backgroundColor: 'rgba(31, 41, 55, 0.9)', titleColor: '#10B981', bodyColor: '#FFFFFF', borderColor: '#374151', borderWidth: 1, padding: 12, cornerRadius: 8 }
+                },
+                interaction: { mode: 'index', intersect: false },
+            }
+        });
+    };
 
-            // --- 2. 숫자 카운트업 함수 ---
-            const animateCountUp = (el, target, duration = 1500) => {
-                let start = 0;
-                const startTime = performance.now();
-                el.innerHTML = `0<span class="text-3xl text-gray-400">/100</span>`;
-                const updateCount = (currentTime) => {
-                    const elapsedTime = currentTime - startTime;
-                    if (elapsedTime >= duration) {
-                        el.innerHTML = `${target}<span class="text-3xl text-gray-400">/100</span>`;
-                        return;
-                    }
-                    const progress = elapsedTime / duration;
-                    const current = Math.floor(target * progress);
-                    el.innerHTML = `${current}<span class="text-3xl text-gray-400">/100</span>`;
-                    requestAnimationFrame(updateCount);
-                };
+    // --- 6. [수정된] DOM 로드 완료 시 실행 ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 언어 버튼에 클릭 이벤트 추가 ---
+        document.getElementById('lang-ko').addEventListener('click', () => translatePage('ko'));
+        document.getElementById('lang-en').addEventListener('click', () => translatePage('en'));
+
+        // --- 저장된 언어 불러오기 ---
+        const savedLang = localStorage.getItem('golf-code-lang') || 'ko';
+        currentLang = savedLang;
+        
+        // --- 1. 숫자 카운트업 함수 ---
+        const animateCountUp = (el, target, duration = 1500) => {
+            let start = 0;
+            const startTime = performance.now();
+            el.innerHTML = `0<span class="text-3xl text-gray-400">/100</span>`;
+            const updateCount = (currentTime) => {
+                const elapsedTime = currentTime - startTime;
+                if (elapsedTime >= duration) {
+                    el.innerHTML = `${target}<span class="text-3xl text-gray-400">/100</span>`;
+                    return;
+                }
+                const progress = elapsedTime / duration;
+                const current = Math.floor(target * progress);
+                el.innerHTML = `${current}<span class="text-3xl text-gray-400">/100</span>`;
                 requestAnimationFrame(updateCount);
             };
+            requestAnimationFrame(updateCount);
+        };
 
-            // --- 3. 순차 애니메이션 함수 ---
-            const animateStaggered = (elements) => {
-                elements.forEach((el, index) => {
-                    el.classList.add('scroll-animate-stagger');
-                    setTimeout(() => {
-                        el.classList.add('is-visible');
-                    }, index * 150);
-                });
-            };
-
-            // --- 4. 네비게이션 메뉴 활성화 (Scroll Spy) 감시자 ---
-            const sections = document.querySelectorAll('main section[id]');
-            const navLinks = document.querySelectorAll('nav a[href^="#"]');
-            const activateNavLink = (id) => {
-                navLinks.forEach(link => {
-                    link.classList.remove('nav-active');
-                    if (link.getAttribute('href') === `#${id}`) {
-                        link.classList.add('nav-active');
-                    }
-                });
-            };
-            const scrollSpyObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        activateNavLink(entry.target.id);
-                    }
-                });
-            }, { rootMargin: '-50% 0px -50% 0px' }); // 화면 정중앙 기준
-            sections.forEach(section => scrollSpyObserver.observe(section));
-
-
-            // --- 5. [통합] 모든 효과를 위한 메인 감시자 ---
-            const mainInteractionObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) return;
-
-                    const target = entry.target;
-
-                    // [기본] 일반 섹션 애니메이션 (slide-up)
-                    if (target.matches('.scroll-animate')) {
-                        target.classList.add('is-visible');
-                        observer.unobserve(target);
-                    }
-                    
-                    // [기본] 일반 섹션 애니메이션 (blur)
-                    if (target.matches('.scroll-animate-blur')) {
-                        target.classList.add('is-visible');
-                        observer.unobserve(target);
-                    }
-
-                    // [고급] 차트 그리기
-                    if (target === chartCanvas) {
-                        drawChart();
-                        observer.unobserve(target);
-                    }
-                    
-                    // [고급] 숫자 카운트업
-                    if (target.matches('.text-6xl.font-extrabold')) {
-                        animateCountUp(target, 87);
-                        observer.unobserve(target);
-                    }
-                    
-                    // [고급] 솔루션 3개 카드 순차 애니메이션 (이제 4개로 변경)
-                    if (target.matches('#solution .grid.lg\\:grid-cols-3')) {
-                        const cards = target.querySelectorAll('#solution .grid.lg\\:grid-cols-3 > div:not(.lg\\:col-span-3)');
-                        animateStaggered(cards);
-                        observer.unobserve(target);
-                    }
-
-                    // [고급] 타임라인 아이템 순차 활성화
-                    if (target.matches('.timeline-item')) {
-                        target.classList.add('is-visible');
-                        // 타임라인은 계속 감시 (스크롤 오르내릴 때마다 효과)
-                        // 만약 한 번만 원하면 아래 줄의 주석을 푸세요
-                        // observer.unobserve(target); 
-                    }
-
-                    // [고급] 경쟁 우위 테이블 Row 순차 애니메이션
-                    if (target.matches('#competition tbody')) {
-                        const rows = target.querySelectorAll('tr');
-                        animateStaggered(rows);
-                        observer.unobserve(target);
-                    }
-
-                    // [고급] '1순위' 카드 하이라이트
-                    if (target.matches('#ask .bg-emerald-600')) {
-                        target.parentElement.classList.add('highlight-card-glow');
-                        observer.unobserve(target);
-                    }
-                });
-            }, { threshold: [0.1, 0.5] }); // 10% 또는 50% 보일 때 감지
-
-            // --- 6. [통합] 모든 감시 대상 등록 ---
-            // [기본] 애니메이션 대상
-            document.querySelectorAll('.scroll-animate, .scroll-animate-blur').forEach(el => mainInteractionObserver.observe(el));
-            // [고급] 차트
-            mainInteractionObserver.observe(chartCanvas);
-            // [고급] 카운트업 숫자
-            mainInteractionObserver.observe(document.querySelector('.text-6xl.font-extrabold'));
-            // [고급] 솔루션 카드 컨테이너 (이제 4개 카드를 포함)
-            mainInteractionObserver.observe(document.querySelector('#solution .grid.lg\\:grid-cols-3'));
-            // [고급] 타임라인 아이템
-            document.querySelectorAll('#roadmap .timeline-item').forEach(el => mainInteractionObserver.observe(el));
-            // [고급] 경쟁 테이블
-            mainInteractionObserver.observe(document.querySelector('#competition tbody'));
-            // [고급] 1순위 태그
-            mainInteractionObserver.observe(document.querySelector('#ask .bg-emerald-600'));
-
-
-            // --- 7. [수정 완료] 네비게이션 부드러운 스크롤링 ---
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
+        // --- 2. 순차 애니메이션 함수 ---
+        const animateStaggered = (elements) => {
+            elements.forEach((el, index) => {
+                el.classList.add('scroll-animate-stagger');
+                setTimeout(() => {
+                    el.classList.add('is-visible');
+                }, index * 150);
             });
+        };
 
+        // --- 3. 네비게이션 메뉴 활성화 (Scroll Spy) ---
+        const sections = document.querySelectorAll('main section[id]');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+        const activateNavLink = (id) => {
+            navLinks.forEach(link => {
+                link.classList.remove('nav-active');
+                if (link.getAttribute('href') === `#${id}`) {
+                    link.classList.add('nav-active');
+                }
+            });
+        };
+        const scrollSpyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    activateNavLink(entry.target.id);
+                }
+            });
+        }, { rootMargin: '-50% 0px -50% 0px' });
+        sections.forEach(section => scrollSpyObserver.observe(section));
+
+        // --- 4. [통합] 모든 효과를 위한 메인 감시자 ---
+        const mainInteractionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+
+                const target = entry.target;
+
+                if (target.matches('.scroll-animate, .scroll-animate-blur')) {
+                    target.classList.add('is-visible');
+                    observer.unobserve(target);
+                }
+                
+                if (target === chartCanvas && !chartInitialized) {
+                    drawChart(currentLang); // 현재 설정된 언어로 차트 그리기
+                    observer.unobserve(target);
+                }
+                
+                if (target.matches('.text-6xl.font-extrabold')) {
+                    animateCountUp(target, 87);
+                    observer.unobserve(target);
+                }
+                
+                if (target.matches('#solution .grid.lg\\:grid-cols-3')) {
+                    const cards = target.querySelectorAll('#solution .grid.lg\\:grid-cols-3 > div:not(.lg\\:col-span-3)');
+                    animateStaggered(cards);
+                    observer.unobserve(target);
+                }
+
+                if (target.matches('.timeline-item')) {
+                    target.classList.add('is-visible');
+                }
+
+                if (target.matches('#competition tbody')) {
+                    const rows = target.querySelectorAll('tr');
+                    animateStaggered(rows);
+                    observer.unobserve(target);
+                }
+
+                if (target.matches('#ask .bg-emerald-600')) {
+                    target.parentElement.classList.add('highlight-card-glow');
+                    observer.unobserve(target);
+                }
+            });
+        }, { threshold: [0.1, 0.5] });
+
+        // --- 5. [통합] 모든 감시 대상 등록 ---
+        document.querySelectorAll('.scroll-animate, .scroll-animate-blur').forEach(el => mainInteractionObserver.observe(el));
+        if (chartCanvas) mainInteractionObserver.observe(chartCanvas);
+        const countUpEl = document.querySelector('.text-6xl.font-extrabold');
+        if (countUpEl) mainInteractionObserver.observe(countUpEl);
+        const solutionGridEl = document.querySelector('#solution .grid.lg\\:grid-cols-3');
+        if (solutionGridEl) mainInteractionObserver.observe(solutionGridEl);
+        document.querySelectorAll('#roadmap .timeline-item').forEach(el => mainInteractionObserver.observe(el));
+        const competitionTbodyEl = document.querySelector('#competition tbody');
+        if (competitionTbodyEl) mainInteractionObserver.observe(competitionTbodyEl);
+        const askPriorityEl = document.querySelector('#ask .bg-emerald-600');
+        if (askPriorityEl) mainInteractionObserver.observe(askPriorityEl);
+        
+        // --- 6. 네비게이션 부드러운 스크롤링 ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetEl = document.querySelector(this.getAttribute('href'));
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
         });
+
+        // --- [최종] 페이지 로드 시 저장된 언어로 번역 실행 ---
+        translatePage(savedLang);
+
+    }); // DOMContentLoaded 끝
     </script>
 
 </body>
