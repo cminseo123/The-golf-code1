@@ -43,14 +43,13 @@
 
         /* -------------------------------------------------
          * [통합] UI/UX 고도화 애니메이션 CSS
-         * (기존 + 고급 효과 모두 통합)
          * -------------------------------------------------
         */
 
         /* A. 스크롤 애니메이션 기본 (고급 이징 적용) */
         .scroll-animate {
             opacity: 0;
-            transform: translateY(30px); /* 기본 'slide-up' 효과 */
+            transform: translateY(30px);
             transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out, transform 0.8s ease-in-out;
         }
         .scroll-animate-blur {
@@ -111,6 +110,280 @@
             scrollbar-width: none; /* Firefox */
         }
     </style>
+    <script>
+        const translations = {
+            'ko': {
+                'title': "The Golf Code: AI, 골프의 '감'을 '코드'로 바꾸다",
+                'hero-title': "AI, 골프의 '감(感)'을 '코드'로 바꾸다",
+                'hero-subtitle': "KPGA 프로가 직접 개발한 데이터 기반 스윙 분석 및 코칭 플랫폼",
+                
+                'nav-problem': "문제 정의",
+                'nav-solution': "솔루션",
+                'nav-tech': "기술 스택",
+                'nav-roadmap': "로드맵",
+                'nav-ask': "The Ask",
+
+                'problem-header': "왜 우리는 매일 연습해도<br>제자리걸음일까요?",
+                'limit-h3': "KPGA 프로로서 느낀 한계",
+                'limit-li1': "투어 성적의 벽, 끊임없는 스윙 교정의 어려움",
+                'limit-li2': "\"내 스윙의 문제를 '감'이 아닌 객관적인 데이터로 보고 싶다!\"",
+                'amateur-h3': "아마추어 골퍼의 현실",
+                'amateur-li1': "정보 비대칭:",
+                'amateur-li2': "고가의 레슨 없이는 정확한 피드백 부재",
+                'amateur-li3': "잘못된 연습:",
+                'amateur-li4': "감에 의존 → 잘못된 습관 고착화 → 실력 정체, 흥미 저하",
+                
+                'solution-header': "Solution: 당신의 스윙 코드를 해독하다",
+                'solution-subtitle': "'The Golf Code' (v0.1) - 영상만 올리면, AI가 당신의 스윙 데이터를 시각적으로 분석해 드립니다.",
+                'sol-ai-title': "AI 자동 분석",
+                'sol-ai-desc': "MediaPipe 기반 자세 추정을 통해 스윙의 모든 관절을 정밀하게 트래킹합니다.",
+                'sol-visual-title': "핵심 문제 시각화",
+                'sol-visual-desc': "머리 움직임(원), 손 궤적(곡선), 스윙 플레인(선) 등 핵심 문제를 직관적으로 보여줍니다.",
+                'sol-score-title': "자세 안정성 점수 & 개선 방향",
+                'sol-score-desc': "AI가 분석한 당신의 스윙 안정성을 점수로 보여드립니다.",
+                'sol-report-title': "데이터 리포트",
+                'sol-report-desc': "스윙의 일관성과 안정성을 데이터로 정량화하여 리포트를 제공합니다.",
+                'sol-score-label': "자세 안정성 점수",
+                'sol-livedemo-title': "Live Demo",
+                'sol-livedemo-desc': "QR 코드를 스캔하거나 아래 링크를 방문해 직접 체험해 보세요.",
+                'chart-title': "손 높이 그래프 (Backswing vs Downswing)",
+
+                'tech-header': "From Scratch:<br>골프 프로, 코드를 배우다",
+                'tech-subtitle': "\"필드의 문제를 해결하기 위해, 직접 기술을 연마했습니다.\"",
+                'tech-h3': "사용한 핵심 기술:",
+                'tech-ul-h3': "개발 과정 하이라이트:",
+                'tech-li1-strong': "아이디어 구체화:",
+                'tech-li1-span': "KPGA 프로 경험 기반 핵심 분석 지표 정의",
+                'tech-li2-strong': "기술 학습 & 구현:",
+                'tech-li2-span': "비전공자로서 Python, AI 라이브러리 학습 및 프로토타입 개발",
+                'tech-li3-strong': "문제 해결 & 개선:",
+                'tech-li3-span': "화면 떨림 버그(v15) 해결, 사용자 피드백 기반 시각화 개선(v17) → 실행력 증명",
+
+                'comp-header': "Why 'The Golf Code'? 우리의 차별점",
+                'comp-subtitle': "\"우리는 단순 분석기가 아닌, 당신의 잠재력을 코드로 풀어내는 성장 파트너입니다.\"",
+                'comp-col1': "구분",
+                'comp-col2': "기존 솔루션 (레슨, 앱)",
+                'comp-col3': "The Golf Code",
+                'comp-row1-th': "분석 주체",
+                'comp-row1-td2': "코치의 주관적 판단 / AI의 '결과' 통보",
+                'comp-row1-td3': "KPGA 프로의 통찰력 + AI의 객관적 데이터",
+                'comp-row2-th': "피드백 방식",
+                'comp-row2-td2': "말 또는 단순 텍스트",
+                'comp-row2-td3': "데이터 기반 시각화 ('왜'인지 증명)",
+                'comp-row3-th': "핵심 가치",
+                'comp-row3-td2': "단발성 레슨 / 범용 분석 기능",
+                'comp-row3-td3': "지속 가능한 '성장 경험' 설계 (개인화, 게임화)",
+
+                'roadmap-header': "From MVP to Platform: 우리의 성장 로드맵",
+                'roadmap-subtitle': "단기 검증을 거쳐, 골퍼를 위한 필수 성장 플랫폼으로 나아갑니다.",
+                'roadmap-h3-1': "시장 검증 계획 (단기: ~3개월)",
+                'roadmap-h3-2': "성장 로드맵",
+                // ... (로드맵 상세 텍스트는 간결성을 위해 생략하고 ID만 부여)
+                
+                'ask-header': "함께 'The Golf Code'를 완성할<br>조력자를 찾습니다",
+                'ask-subtitle': "\"기술적 깊이를 더하고, 지속 가능한 성장을 위한 발판을 마련하고 싶습니다.\"",
+                'ask-tech': "기술 멘토링",
+                'ask-research': "연구 연계",
+                'ask-network': "네트워크 활용",
+                'ask-thanks': "감사합니다.",
+                'footer-pro': "KPGA 프로 / 'The Golf Code' 개발자",
+                'footer-email': "Email:",
+                'footer-qa': "Q&A: 질문을 기다립니다."
+            },
+            'en': {
+                // HERO 섹션
+                'hero-title': "AI Translates Golf 'Feel' into 'Code'",
+                'hero-subtitle': "Data-Driven Swing Analysis and Coaching Platform Developed by a KPGA Pro",
+                'nav-problem': "Problem",
+                'nav-solution': "Solution",
+                'nav-tech': "Tech Stack",
+                'nav-roadmap': "Roadmap",
+                'nav-ask': "The Ask",
+
+                'problem-header': "Why do we practice every day<br>but still stand still?",
+                'limit-title': "Limits Felt as a KPGA Pro",
+                'limit-li1': "Tournament wall, difficulty of continuous swing correction",
+                'limit-li2': "\"I want to see my swing problems with objective data, not just feel!\"",
+                'amateur-h3': "Amateur Golfer's Reality",
+                'amateur-li1': "Information Asymmetry:",
+                'amateur-li2': "Lack of accurate feedback without expensive lessons",
+                'amateur-li3': "Mistaken Practice:",
+                'amateur-li4': "Reliance on feel → Habit solidification → Stagnation, Loss of interest",
+
+                'solution-header': "Solution: Deciphering Your Swing Code",
+                'solution-subtitle': "'The Golf Code' (v0.1) - Upload a video, and AI visually analyzes your swing data.",
+                'sol-ai-title': "AI Automatic Analysis",
+                'sol-ai-desc': "Precisely tracks all swing joints using MediaPipe based pose estimation.",
+                'sol-visual-title': "Key Issue Visualization",
+                'sol-visual-desc': "Shows key issues intuitively (Head circle, hand path, swing plane, etc.).",
+                'sol-score-title': "Posture Stability Score & Improvement",
+                'sol-score-desc': "AI shows your swing stability as a score.",
+                'sol-report-title': "Data Report",
+                'sol-report-desc': "Quantifies swing consistency and stability with data reports.",
+                'sol-score-label': "Posture Stability Score",
+                'sol-livedemo-title': "Live Demo",
+                'sol-livedemo-desc': "Scan the QR or visit the link below to try it yourself.",
+                'chart-title': "Hand Height Chart (Backswing vs Downswing)",
+
+                'tech-header': "From Scratch:<br>Golf Pro Learns the Code",
+                'tech-subtitle': "\"To solve problems on the course, I learned the technology myself.\"",
+                'tech-h3': "Core Technologies Used:",
+                'tech-ul-h3': "Development Highlights:",
+                'tech-li1-strong': "Idea Formulation:",
+                'tech-li1-span': "Defining core analysis metrics based on KPGA Pro experience",
+                'tech-li2-strong': "Tech Learning & Implementation:",
+                'tech-li2-span': "Non-major learning Python, AI libraries, and developing the prototype",
+                'tech-li3-strong': "Problem Solving & Improvement:",
+                'tech-li3-span': "Fixing screen shake bug (v15), visualization refinement (v17) → Proving execution",
+                
+                'comp-header': "Why 'The Golf Code'? Our Differentiation",
+                'comp-subtitle': "\"We are not just an analyzer, but a growth partner deciphering your potential.\"",
+                'comp-col1': "Category",
+                'comp-col2': "Existing Solution (Lessons, Apps)",
+                'comp-col3': "The Golf Code",
+                'comp-row1-th': "Analysis Subject",
+                'comp-row1-td2': "Coach's subjective judgment / AI 'result' notification",
+                'comp-row1-td3': "KPGA Pro Insight + AI Objective Data",
+                'comp-row2-th': "Feedback Method",
+                'comp-row2-td2': "Verbal or simple text",
+                'comp-row2-td3': "Data-driven Visualization (Proving 'Why')",
+                'comp-row3-th': "Core Value",
+                'comp-row3-td2': "One-off lessons / Generic analysis features",
+                'comp-row3-td3': "Sustainable 'Growth Experience' Design (Personalization, Gamification)",
+
+                'roadmap-header': "From MVP to Platform: Our Growth Roadmap",
+                'roadmap-subtitle': "Progressing through short-term validation to become the essential growth platform for golfers.",
+                'roadmap-h3-1': "Market Validation Plan (Short-Term: ~3 Months)",
+                'roadmap-h3-2': "Growth Roadmap",
+
+                'ask-header': "Seeking Collaborators<br>to Complete 'The Golf Code'",
+                'ask-subtitle': "\"We want to add technical depth and establish a foundation for sustainable growth.\"",
+                'ask-tech': "Technical Mentoring",
+                'ask-research': "Research Linkage",
+                'ask-network': "Network Utilization",
+                'ask-thanks': "Thank You.",
+                'footer-pro': "KPGA Pro / 'The Golf Code' Developer",
+                'footer-email': "Email:",
+                'footer-qa': "Q&A: We await your questions."
+            }
+        };
+
+        // 이 함수는 페이지 로드 시 또는 언어 선택 시 호출됩니다.
+        function setLanguage(lang) {
+            const texts = translations[lang];
+            
+            // HTML 언어 속성 변경 (접근성)
+            document.documentElement.lang = lang;
+
+            // 1. Title 태그 변경
+            document.title = texts['title'];
+
+            // 2. Navigation 텍스트 변경
+            document.getElementById('nav-problem').textContent = texts['nav-problem'];
+            document.getElementById('nav-solution').textContent = texts['nav-solution'];
+            document.getElementById('nav-tech').textContent = texts['nav-tech'];
+            document.getElementById('nav-roadmap').textContent = texts['nav-roadmap'];
+            document.getElementById('nav-ask').textContent = texts['nav-ask'];
+            
+            // 3. Hero 섹션 텍스트 변경
+            document.getElementById('hero-main-title').innerHTML = texts['hero-title'];
+            document.getElementById('hero-sub-text').textContent = texts['hero-subtitle'];
+            
+            // 4. Problem 섹션 텍스트 변경
+            document.getElementById('problem-main-header').innerHTML = texts['problem-header'];
+            document.getElementById('limit-h3').textContent = texts['limit-title'];
+            document.getElementById('limit-li1').textContent = texts['limit-li1'];
+            document.getElementById('limit-li2').textContent = texts['limit-li2'];
+            document.getElementById('amateur-h3').textContent = texts['amateur-h3'];
+            document.getElementById('amateur-li1-span').textContent = texts['amateur-li1'];
+            document.getElementById('amateur-li2-span').textContent = texts['amateur-li2'];
+            document.getElementById('amateur-li3-span').textContent = texts['amateur-li3'];
+            document.getElementById('amateur-li4-span').textContent = texts['amateur-li4'];
+
+            // 5. Solution 섹션 텍스트 변경
+            document.getElementById('solution-header').innerHTML = texts['solution-header'];
+            document.getElementById('solution-subtitle').textContent = texts['solution-subtitle'];
+
+            document.getElementById('sol-ai-title').textContent = texts['sol-ai-title'];
+            document.getElementById('sol-ai-desc').textContent = texts['sol-ai-desc'];
+
+            document.getElementById('sol-visual-title').textContent = texts['sol-visual-title'];
+            document.getElementById('sol-visual-desc').textContent = texts['sol-visual-desc'];
+
+            document.getElementById('sol-score-title').textContent = texts['sol-score-title'];
+            document.getElementById('sol-score-desc').textContent = texts['sol-score-desc'];
+            
+            document.getElementById('sol-report-title').textContent = texts['sol-report-title'];
+            document.getElementById('sol-report-desc').textContent = texts['sol-report-desc'];
+            document.getElementById('sol-score-label').textContent = texts['sol-score-label'];
+            document.getElementById('sol-livedemo-title').textContent = texts['sol-livedemo-title'];
+            document.getElementById('sol-livedemo-desc').textContent = texts['sol-livedemo-desc'];
+            document.getElementById('chart-title').textContent = texts['chart-title'];
+
+            // 6. Tech 섹션 텍스트 변경
+            document.getElementById('tech-header').innerHTML = texts['tech-header'];
+            document.getElementById('tech-subtitle').textContent = texts['tech-subtitle'];
+            document.getElementById('tech-h3').textContent = texts['tech-h3'];
+            document.getElementById('tech-ul-h3').textContent = texts['tech-ul-h3'];
+            document.getElementById('tech-li1-strong').textContent = texts['tech-li1-strong'];
+            document.getElementById('tech-li1-span').textContent = texts['tech-li1-span'];
+            document.getElementById('tech-li2-strong').textContent = texts['tech-li2-strong'];
+            document.getElementById('tech-li2-span').textContent = texts['tech-li2-span'];
+            document.getElementById('tech-li3-strong').textContent = texts['tech-li3-strong'];
+            document.getElementById('tech-li3-span').textContent = texts['tech-li3-span'];
+
+            // 7. Competition 섹션 텍스트 변경
+            document.getElementById('comp-header').innerHTML = texts['comp-header'];
+            document.getElementById('comp-subtitle').textContent = texts['comp-subtitle'];
+            document.getElementById('comp-col1').textContent = texts['comp-col1'];
+            document.getElementById('comp-col2').textContent = texts['comp-col2'];
+            document.getElementById('comp-col3').textContent = texts['comp-col3'];
+            document.getElementById('comp-row1-th').textContent = texts['comp-row1-th'];
+            document.getElementById('comp-row1-td2').textContent = texts['comp-row1-td2'];
+            document.getElementById('comp-row1-td3').textContent = texts['comp-row1-td3'];
+            document.getElementById('comp-row2-th').textContent = texts['comp-row2-th'];
+            document.getElementById('comp-row2-td2').textContent = texts['comp-row2-td2'];
+            document.getElementById('comp-row2-td3').textContent = texts['comp-row2-td3'];
+            document.getElementById('comp-row3-th').textContent = texts['comp-row3-th'];
+            document.getElementById('comp-row3-td2').textContent = texts['comp-row3-td2'];
+            document.getElementById('comp-row3-td3').textContent = texts['comp-row3-td3'];
+
+
+            // 8. Roadmap 섹션 텍스트 변경
+            document.getElementById('roadmap-header').innerHTML = texts['roadmap-header'];
+            document.getElementById('roadmap-subtitle').textContent = texts['roadmap-subtitle'];
+            document.getElementById('roadmap-h3-1').textContent = texts['roadmap-h3-1'];
+            document.getElementById('roadmap-h3-2').textContent = texts['roadmap-h3-2'];
+
+
+            // 9. Ask 섹션 텍스트 변경
+            document.getElementById('ask-header').innerHTML = texts['ask-header'];
+            document.getElementById('ask-subtitle').textContent = texts['ask-subtitle'];
+            document.getElementById('ask-tech').textContent = texts['ask-tech'];
+            document.getElementById('ask-research').textContent = texts['ask-research'];
+            document.getElementById('ask-network').textContent = texts['ask-network'];
+            document.getElementById('ask-thanks').textContent = texts['ask-thanks'];
+
+            // 10. Footer 텍스트 변경
+            document.getElementById('footer-pro').textContent = texts['footer-pro'];
+            document.getElementById('footer-email').textContent = texts['footer-email'];
+            document.getElementById('footer-qa').textContent = texts['footer-qa'];
+        }
+
+        // 페이지 로드 시 기본 언어 설정 및 드롭다운 초기값 설정
+        document.addEventListener('DOMContentLoaded', () => {
+             const langSwitcher = document.getElementById('language-switcher');
+             if (langSwitcher) {
+                 const initialLang = langSwitcher.value || 'ko';
+                 setLanguage(initialLang);
+                 
+                 // 드롭다운 변경 이벤트 리스너 추가
+                 langSwitcher.addEventListener('change', (e) => {
+                     setLanguage(e.target.value);
+                 });
+             }
+        });
+    </script>
 </head>
 <body class="antialiased">
 
@@ -119,14 +392,22 @@
             <h1 class="text-xl font-bold text-white">
                 <span class="text-emerald-400">The</span> Golf Code
             </h1>
-            <div class="hidden md:flex space-x-6">
-                <a href="#problem" class="text-gray-300 hover:text-emerald-400 transition duration-300">문제 정의</a>
-                <a href="#solution" class="text-gray-300 hover:text-emerald-400 transition duration-300">솔루션</a>
-                <a href="#tech" class="text-gray-300 hover:text-emerald-400 transition duration-300">기술 스택</a>
-                <a href="#roadmap" class="text-gray-300 hover:text-emerald-400 transition duration-300">로드맵</a>
-                <a href="#ask" class="text-gray-300 hover:text-emerald-400 transition duration-300">The Ask</a>
+            
+            <div class="flex space-x-6 items-center">
+                <select id="language-switcher" class="bg-gray-700 text-white rounded px-2 py-1 text-sm cursor-pointer" onchange="setLanguage(this.value)">
+                    <option value="ko">한국어</option>
+                    <option value="en">English</option>
+                </select>
+
+                <div class="hidden md:flex space-x-6">
+                    <a href="#problem" class="text-gray-300 hover:text-emerald-400 transition duration-300" id="nav-problem">문제 정의</a>
+                    <a href="#solution" class="text-gray-300 hover:text-emerald-400 transition duration-300" id="nav-solution">솔루션</a>
+                    <a href="#tech" class="text-gray-300 hover:text-emerald-400 transition duration-300" id="nav-tech">기술 스택</a>
+                    <a href="#roadmap" class="text-gray-300 hover:text-emerald-400 transition duration-300" id="nav-roadmap">로드맵</a>
+                    <a href="#ask" class="text-gray-300 hover:text-emerald-400 transition duration-300" id="nav-ask">The Ask</a>
+                </div>
             </div>
-        </nav>
+            </nav>
     </header>
 
     <main>
@@ -142,11 +423,11 @@
                 <h1 class="text-4xl md:text-5xl lg:text-5xl font-extrabold text-white mb-7">
                     The Golf Code:
                     <br>
-                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400" id="hero-main-title">
                         AI, 골프의 '감(感)'을 '코드'로 바꾸다
                     </span>
                 </h1>
-                <p class="text-lg md:text-2xl text-gray-300 mb-12">
+                <p class="text-lg md:text-2xl text-gray-300 mb-12" id="hero-sub-text">
                     KPGA 프로가 직접 개발한 데이터 기반 스윙 분석 및 코칭 플랫폼
                 </p>
                 
@@ -163,20 +444,21 @@
 
         <section id="problem" class="py-20 md:py-32 bg-gray-900 px-4">
             <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-                <div class="pr-0 md:pr-8 scroll-animate"> <h2 class="section-header">"왜 우리는 매일 연습해도<br>제자리걸음일까요?"</h2>
+                <div class="pr-0 md:pr-8 scroll-animate"> 
+                    <h2 class="section-header" id="problem-main-header">"왜 우리는 매일 연습해도<br>제자리걸음일까요?"</h2>
                     <div class="space-y-6 text-gray-300 text-lg">
                         <div>
-                            <h3 class="font-bold text-xl text-white mb-2">KPGA 프로로서 느낀 한계</h3>
+                            <h3 class="font-bold text-xl text-white mb-2" id="limit-h3">KPGA 프로로서 느낀 한계</h3>
                             <ul class="list-disc list-outside ml-5 space-y-1 text-gray-400">
-                                <li>투어 성적의 벽, 끊임없는 스윙 교정의 어려움</li>
-                                <li>"내 스윙의 문제를 '감'이 아닌 객관적인 데이터로 보고 싶다!"</li>
+                                <li id="limit-li1">투어 성적의 벽, 끊임없는 스윙 교정의 어려움</li>
+                                <li id="limit-li2">"내 스윙의 문제를 '감'이 아닌 객관적인 데이터로 보고 싶다!"</li>
                             </ul>
                         </div>
                         <div>
-                            <h3 class="font-bold text-xl text-white mb-2">아마추어 골퍼의 현실</h3>
+                            <h3 class="font-bold text-xl text-white mb-2" id="amateur-h3">아마추어 골퍼의 현실</h3>
                             <ul class="list-disc list-outside ml-5 space-y-1 text-gray-400">
-                                <li><span class="font-semibold text-gray-200">정보 비대칭:</span> 고가의 레슨 없이는 정확한 피드백 부재</li>
-                                <li><span class="font-semibold text-gray-200">잘못된 연습:</span> 감에 의존 → 잘못된 습관 고착화 → 실력 정체, 흥미 저하</li>
+                                <li><span class="font-semibold text-gray-200" id="amateur-li1-span">정보 비대칭:</span> 고가의 레슨 없이는 정확한 피드백 부재</li>
+                                <li><span class="font-semibold text-gray-200" id="amateur-li3-span">잘못된 연습:</span> 감에 의존 → 잘못된 습관 고착화 → 실력 정체, 흥미 저하</li>
                             </ul>
                         </div>
                     </div>
@@ -190,26 +472,27 @@
 
         <section id="solution" class="py-20 md:py-32 bg-gray-800 px-4">
             <div class="container mx-auto max-w-7xl">
-                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate"> <h2 class="section-header">Solution: 당신의 스윙 코드를 해독하다</h2>
-                    <p class="text-xl text-gray-300">'The Golf Code' (v0.1) - 영상만 올리면, AI가 당신의 스윙 데이터를 시각적으로 분석해 드립니다.</p>
+                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate"> 
+                    <h2 class="section-header" id="solution-header">Solution: 당신의 스윙 코드를 해독하다</h2>
+                    <p class="text-xl text-gray-300" id="solution-subtitle">'The Golf Code' (v0.1) - 영상만 올리면, AI가 당신의 스윙 데이터를 시각적으로 분석해 드립니다.</p>
                 </div>
                 
                 <div class="grid lg:grid-cols-3 gap-8">
                     <div class="bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700">
-                        <h3 class="text-xl font-bold text-white mb-3">AI 자동 분석</h3>
-                        <p class="text-gray-400 mb-4">MediaPipe 기반 자세 추정을 통해 스윙의 모든 관절을 정밀하게 트래킹합니다.</p>
+                        <h3 class="text-xl font-bold text-white mb-3" id="sol-ai-title">AI 자동 분석</h3>
+                        <p class="text-gray-400 mb-4" id="sol-ai-desc">MediaPipe 기반 자세 추정을 통해 스윙의 모든 관절을 정밀하게 트래킹합니다.</p>
                         <img src="AI Joint Tracking (v17).png" alt="관절 추적 영상 캡처" class="w-full rounded-lg object-cover">
                     </div>
 
                     <div class="bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700">
-                        <h3 class="text-xl font-bold text-white mb-3">핵심 문제 시각화</h3>
-                        <p class="text-gray-400 mb-4">머리 움직임(원), 손 궤적(곡선), 스윙 플레인(선) 등 핵심 문제를 직관적으로 보여줍니다.</p>
+                        <h3 class="text-xl font-bold text-white mb-3" id="sol-visual-title">핵심 문제 시각화</h3>
+                        <p class="text-gray-400 mb-4" id="sol-visual-desc">머리 움직임(원), 손 궤적(곡선), 스윙 플레인(선) 등 핵심 문제를 직관적으로 보여줍니다.</p>
                         <img src="Head Sway & Hand Path.png" alt="머리 원과 손 경로 스크린샷" class="w-full rounded-lg object-cover">
                     </div>
 
                     <div class="bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700">
-                        <h3 class="text-xl font-bold text-white mb-3">자세 안정성 점수 & 개선 방향</h3>
-                        <p class="text-gray-400 mb-4">AI가 분석한 당신의 스윙 안정성을 점수로 보여드립니다.</p>
+                        <h3 class="text-xl font-bold text-white mb-3" id="sol-score-title">자세 안정성 점수 & 개선 방향</h3>
+                        <p class="text-gray-400 mb-4" id="sol-score-desc">AI가 분석한 당신의 스윙 안정성을 점수로 보여드립니다.</p>
                         <img src="Gemini_Generated9dzl.PNG" alt="자세 안정성 점수 및 개선 방향 이미지" class="w-full rounded-lg object-cover">
                     </div>
 
@@ -217,23 +500,23 @@
                     <div class="bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700 lg:col-span-3">
                         <div class="grid md:grid-cols-2 gap-8 items-center">
                             <div>
-                                <h3 class="text-xl font-bold text-white mb-3">데이터 리포트</h3>
-                                <p class="text-gray-400 mb-6">스윙의 일관성과 안정성을 데이터로 정량화하여 리포트를 제공합니다.</p>
+                                <h3 class="text-xl font-bold text-white mb-3" id="sol-report-title">데이터 리포트</h3>
+                                <p class="text-gray-400 mb-6" id="sol-report-desc">스윙의 일관성과 안정성을 데이터로 정량화하여 리포트를 제공합니다.</p>
                                 <div class="bg-gray-800 p-6 rounded-lg mb-6">
-                                    <span class="text-sm font-semibold text-emerald-400 uppercase">자세 안정성 점수</span>
+                                    <span class="text-sm font-semibold text-emerald-400 uppercase" id="sol-score-label">자세 안정성 점수</span>
                                     <p class="text-6xl font-extrabold text-white">0<span class="text-3xl text-gray-400">/100</span></p>
                                 </div>
                                 <div class="flex flex-col sm:flex-row gap-4">
                                     <img src="https://placehold.co/150x150/111827/FFFFFF?text=Live+Demo+QR" alt="Live Demo QR Code" class="w-32 h-32 rounded-lg">
                                     <div>
-                                        <h4 class="font-semibold text-white">Live Demo</h4>
-                                        <p class="text-gray-400 text-sm">QR 코드를 스캔하거나 아래 링크를 방문해 직접 체험해 보세요.</p>
+                                        <h4 class="font-semibold text-white" id="sol-livedemo-title">Live Demo</h4>
+                                        <p class="text-gray-400 text-sm" id="sol-livedemo-desc">QR 코드를 스캔하거나 아래 링크를 방문해 직접 체험해 보세요.</p>
                                         <a href="https://huggingface.co/spaces/Cminseo/golf-analyzer" target="_blank" class="text-emerald-400 hover:text-emerald-300 break-all text-sm">huggingface.co/spaces/Cminseo/golf-analyzer</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="bg-gray-800 p-4 rounded-lg">
-                                <h4 class="text-center font-semibold text-white mb-2">손 높이 그래프 (Backswing vs Downswing)</h4>
+                                <h4 class="text-center font-semibold text-white mb-2" id="chart-title">손 높이 그래프 (Backswing vs Downswing)</h4>
                                 <canvas id="handHeightChart"></canvas>
                             </div>
                         </div>
@@ -249,11 +532,12 @@
                          class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
                 </div>
                 
-                <div class="pl-0 md:pl-8 scroll-animate"> <h2 class="section-header">From Scratch:<br>골프 프로, 코드를 배우다</h2>
-                    <p class="text-xl text-gray-300 mb-8">"필드의 문제를 해결하기 위해, 직접 기술을 연마했습니다."</p>
+                <div class="pl-0 md:pl-8 scroll-animate"> 
+                    <h2 class="section-header" id="tech-header">From Scratch:<br>골프 프로, 코드를 배우다</h2>
+                    <p class="text-xl text-gray-300 mb-8" id="tech-subtitle">"필드의 문제를 해결하기 위해, 직접 기술을 연마했습니다."</p>
                     
                     <div class="mb-8">
-                        <h3 class="font-bold text-lg text-white mb-3">사용한 핵심 기술:</h3>
+                        <h3 class="font-bold text-lg text-white mb-3" id="tech-h3">사용한 핵심 기술:</h3>
                         <div class="flex space-x-4">
                             <span class="bg-yellow-400 text-yellow-900 text-sm font-bold px-3 py-1 rounded-full">[Python]</span>
                             <span class="bg-red-400 text-red-900 text-sm font-bold px-3 py-1 rounded-full">[Streamlit]</span>
@@ -262,19 +546,19 @@
                     </div>
                     
                     <div>
-                        <h3 class="font-bold text-lg text-white mb-3">개발 과정 하이라이트:</h3>
+                        <h3 class="font-bold text-lg text-white mb-3" id="tech-ul-h3">개발 과정 하이라이트:</h3>
                         <ul class="list-none space-y-3 text-gray-400">
                             <li class="flex items-start">
                                 <span class="text-emerald-400 font-bold mr-2">✔</span>
-                                <div><strong class="text-gray-200">아이디어 구체화:</strong> KPGA 프로 경험 기반 핵심 분석 지표 정의</div>
+                                <div><strong class="text-gray-200" id="tech-li1-strong">아이디어 구체화:</strong> <span id="tech-li1-span">KPGA 프로 경험 기반 핵심 분석 지표 정의</span></div>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-emerald-400 font-bold mr-2">✔</span>
-                                <div><strong class="text-gray-200">기술 학습 & 구현:</strong> 비전공자로서 Python, AI 라이브러리 학습 및 프로토타입 개발</div>
+                                <div><strong class="text-gray-200" id="tech-li2-strong">기술 학습 & 구현:</strong> <span id="tech-li2-span">비전공자로서 Python, AI 라이브러리 학습 및 프로토타입 개발</span></div>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-emerald-400 font-bold mr-2">✔</span>
-                                <div><strong class="text-gray-200">문제 해결 & 개선:</strong> 화면 떨림 버그(v15) 해결, 사용자 피드백 기반 시각화 개선(v17) → 실행력 증명</div>
+                                <div><strong class="text-gray-200" id="tech-li3-strong">문제 해결 & 개선:</strong> <span id="tech-li3-span">화면 떨림 버그(v15) 해결, 사용자 피드백 기반 시각화 개선(v17) → 실행력 증명</span></div>
                             </li>
                         </ul>
                     </div>
@@ -284,34 +568,35 @@
 
         <section id="competition" class="py-20 md:py-32 bg-gray-800 px-4">
             <div class="container mx-auto max-w-5xl">
-                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate"> <h2 class="section-header">Why 'The Golf Code'? 우리의 차별점</h2>
-                    <p class="text-xl text-gray-300">"우리는 단순 분석기가 아닌, 당신의 잠재력을 코드로 풀어내는 성장 파트너입니다."</p>
+                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate"> 
+                    <h2 class="section-header" id="comp-header">Why 'The Golf Code'? 우리의 차별점</h2>
+                    <p class="text-xl text-gray-300" id="comp-subtitle">"우리는 단순 분석기가 아닌, 당신의 잠재력을 코드로 풀어내는 성장 파트너입니다."</p>
                 </div>
 
                 <div class="overflow-x-hidden hover:overflow-x-auto lg:overflow-x-auto hide-scrollbar shadow-2xl rounded-xl border border-gray-700">
                     <table class="w-full min-w-lg text-left text-gray-300">
                         <thead class="bg-gray-900 text-sm text-emerald-400 uppercase">
                             <tr>
-                                <th scope="col" class="px-6 py-4 font-semibold">구분</th>
-                                <th scope="col" class="px-6 py-4 font-semibold">기존 솔루션 (레슨, 앱)</th>
-                                <th scope="col" class="px-6 py-4 font-semibold bg-emerald-900/50">The Golf Code</th>
+                                <th scope="col" class="px-6 py-4 font-semibold" id="comp-col1">구분</th>
+                                <th scope="col" class="px-6 py-4 font-semibold" id="comp-col2">기존 솔루션 (레슨, 앱)</th>
+                                <th scope="col" class="px-6 py-4 font-semibold bg-emerald-900/50" id="comp-col3">The Golf Code</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-700">
                             <tr class="bg-gray-800 hover:bg-gray-700/50 transition">
-                                <th scope="row" class="px-6 py-5 font-semibold text-white whitespace-nowrap">분석 주체</th>
-                                <td class="px-6 py-5">코치의 주관적 판단 / AI의 '결과' 통보</td>
-                                <td class="px-6 py-5 font-bold text-emerald-300 bg-gray-800/50">KPGA 프로의 통찰력 + AI의 객관적 데이터</td>
+                                <th scope="row" class="px-6 py-5 font-semibold text-white whitespace-nowrap" id="comp-row1-th">분석 주체</th>
+                                <td class="px-6 py-5" id="comp-row1-td2">코치의 주관적 판단 / AI의 '결과' 통보</td>
+                                <td class="px-6 py-5 font-bold text-emerald-300 bg-gray-800/50" id="comp-row1-td3">KPGA 프로의 통찰력 + AI의 객관적 데이터</td>
                             </tr>
                             <tr class="bg-gray-800 hover:bg-gray-700/50 transition">
-                                <th scope="row" class="px-6 py-5 font-semibold text-white whitespace-nowrap">피드백 방식</th>
-                                <td class="px-6 py-5">말 또는 단순 텍스트</td>
-                                <td class="px-6 py-5 font-bold text-emerald-300 bg-gray-800/50">데이터 기반 시각화 ('왜'인지 증명)</td>
+                                <th scope="row" class="px-6 py-5 font-semibold text-white whitespace-nowrap" id="comp-row2-th">피드백 방식</th>
+                                <td class="px-6 py-5" id="comp-row2-td2">말 또는 단순 텍스트</td>
+                                <td class="px-6 py-5 font-bold text-emerald-300 bg-gray-800/50" id="comp-row2-td3">데이터 기반 시각화 ('왜'인지 증명)</td>
                             </tr>
                             <tr class="bg-gray-800 hover:bg-gray-700/50 transition">
-                                <th scope="row" class="px-6 py-5 font-semibold text-white whitespace-nowrap">핵심 가치</th>
-                                <td class="px-6 py-5">단발성 레슨 / 범용 분석 기능</td>
-                                <td class="px-6 py-5 font-bold text-emerald-300 bg-gray-800/50">지속 가능한 '성장 경험' 설계 (개인화, 게임화)</td>
+                                <th scope="row" class="px-6 py-5 font-semibold text-white whitespace-nowrap" id="comp-row3-th">핵심 가치</th>
+                                <td class="px-6 py-5" id="comp-row3-td2">단발성 레슨 / 범용 분석 기능</td>
+                                <td class="px-6 py-5 font-bold text-emerald-300 bg-gray-800/50" id="comp-row3-td3">지속 가능한 '성장 경험' 설계 (개인화, 게임화)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -321,58 +606,61 @@
         
         <section id="roadmap" class="py-20 md:py-32 bg-gray-900 px-4">
             <div class="container mx-auto max-w-6xl">
-                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate"> <h2 class="section-header">From MVP to Platform: 우리의 성장 로드맵</h2>
-                    <p class="text-xl text-gray-300">단기 검증을 거쳐, 골퍼를 위한 필수 성장 플랫폼으로 나아갑니다.</p>
+                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate"> 
+                    <h2 class="section-header" id="roadmap-header">From MVP to Platform: 우리의 성장 로드맵</h2>
+                    <p class="text-xl text-gray-300" id="roadmap-subtitle">단기 검증을 거쳐, 골퍼를 위한 필수 성장 플랫폼으로 나아갑니다.</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-12">
-                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700 scroll-animate-blur"> <h3 class="text-2xl font-bold text-white mb-6">시장 검증 계획 (단기: ~3개월)</h3>
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700 scroll-animate-blur"> 
+                        <h3 class="text-2xl font-bold text-white mb-6" id="roadmap-h3-1">시장 검증 계획 (단기: ~3개월)</h3>
                         <div class="space-y-4">
                             <div class="flex items-start">
                                 <span class="text-2xl mr-4">1️⃣</span>
                                 <div>
-                                    <h4 class="font-semibold text-lg text-emerald-400">10명 심층 인터뷰</h4>
-                                    <p class="text-gray-400">핵심 가치 및 지불 의향(WTP) 검증 (NPS, 가짜 문 테스트 전환율 목표 설정)</p>
+                                    <h4 class="font-semibold text-lg text-emerald-400" id="roadmap-li1-h4">10명 심층 인터뷰</h4>
+                                    <p class="text-gray-400" id="roadmap-li1-p">핵심 가치 및 지불 의향(WTP) 검증 (NPS, 가짜 문 테스트 전환율 목표 설정)</p>
                                 </div>
                             </div>
 
                              <div class="flex items-start">
                                 <span class="text-2xl mr-4">2️⃣</span>
                                 <div>
-                                    <h4 class="font-semibold text-lg text-emerald-400">'가짜 문' 테스트 실행</h4>
-                                    <p class="text-gray-400">핵심 유료 기능에 대한 시장 수요(관심도)를 정량적 데이터(전환율 %)로 측정)</p>
+                                    <h4 class="font-semibold text-lg text-emerald-400" id="roadmap-li2-h4">'가짜 문' 테스트 실행</h4>
+                                    <p class="text-gray-400" id="roadmap-li2-p">핵심 유료 기능에 대한 시장 수요(관심도)를 정량적 데이터(전환율 %)로 측정)</p>
                                 </div>
                              </div>
 
                              <div class="flex items-start">
                                 <span class="text-2xl mr-4">3️⃣</span>
                                 <div>
-                                    <h4 class="font-semibold text-lg text-emerald-400">사용 데이터 초기 분석</h4>
-                                    <p class="text-gray-400">실제 사용 패턴을 파악하고, 어떤 문제점을 가진 사용자들이 우리 앱을 주로 사용하는지 초기 사용자 페르소나 정의)</p>
+                                    <h4 class="font-semibold text-lg text-emerald-400" id="roadmap-li3-h4">사용 데이터 초기 분석</h4>
+                                    <p class="text-gray-400" id="roadmap-li3-p">실제 사용 패턴을 파악하고, 어떤 문제점을 가진 사용자들이 우리 앱을 주로 사용하는지 초기 사용자 페르소나 정의)</p>
                                 </div>
                              </div>
                             
                         </div>
                     </div>
 
-                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700 scroll-animate"> <h3 class="text-2xl font-bold text-white mb-8">성장 로드맵</h3>
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700 scroll-animate"> 
+                        <h3 class="text-2xl font-bold text-white mb-8" id="roadmap-h3-2">성장 로드맵</h3>
                         <div class="relative">
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-connector"></div>
-                                <h4 class="text-lg font-semibold text-white mb-1">MVP (~6개월)</h4>
-                                <p class="text-gray-400">'자세 안정성 분석' MVP 고도화 (웹), 초기 사용자 확보</p>
+                                <h4 class="text-lg font-semibold text-white mb-1" id="roadmap-ul1-h4">MVP (~6개월)</h4>
+                                <p class="text-gray-400" id="roadmap-ul1-p">'자세 안정성 분석' MVP 고도화 (웹), 초기 사용자 확보</p>
                             </div>
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-connector"></div>
-                                <h4 class="text-lg font-semibold text-white mb-1">V2 (~1년)</h4>
-                                <p class="text-gray-400">핵심 팀 빌딩 (앱 개발자, 디자이너), Firebase 기반 정식 앱 런칭, '성장 기록 & 게임화' 도입</p>
+                                <h4 class="text-lg font-semibold text-white mb-1" id="roadmap-ul2-h4">V2 (~1년)</h4>
+                                <p class="text-gray-400" id="roadmap-ul2-p">핵심 팀 빌딩 (앱 개발자, 디자이너), Firebase 기반 정식 앱 런칭, '성장 기록 & 게임화' 도입</p>
                             </div>
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
-                                <h4 class="text-lg font-semibold text-white mb-1">V3 (1년~)</h4>
-                                <p class="text-gray-400">자체 딥러닝 모델 개발 (스윙 DNA, 클럽 패스 추정 등), O2O 코치 매칭 플랫폼 확장</p>
+                                <h4 class="text-lg font-semibold text-white mb-1" id="roadmap-ul3-h4">V3 (1년~)</h4>
+                                <p class="text-gray-400" id="roadmap-ul3-p">자체 딥러닝 모델 개발 (스윙 DNA, 클럽 패스 추정 등), O2O 코치 매칭 플랫폼 확장</p>
                             </div>
                         </div>
                     </div>
@@ -382,26 +670,28 @@
 
         <section id="ask" class="py-20 md:py-32 bg-gray-800 px-4">
             <div class="container mx-auto max-w-3xl text-center">
-                <div class="scroll-animate"> <h2 class="section-header">함께 'The Golf Code'를 완성할<br>조력자를 찾습니다</h2>
-                    <p class="text-xl text-gray-300 mb-12">"기술적 깊이를 더하고, 지속 가능한 성장을 위한 발판을 마련하고 싶습니다."</p>
+                <div class="scroll-animate"> 
+                    <h2 class="section-header" id="ask-header">함께 'The Golf Code'를 완성할<br>조력자를 찾습니다</h2>
+                    <p class="text-xl text-gray-300 mb-12" id="ask-subtitle">"기술적 깊이를 더하고, 지속 가능한 성장을 위한 발판을 마련하고 싶습니다."</p>
                 </div>
                 
-                <div class="text-left bg-gray-900 p-8 md:p-12 rounded-xl shadow-2xl border border-gray-700 space-y-6 scroll-animate-blur"> <div class="p-8">
+                <div class="text-left bg-gray-900 p-8 md:p-12 rounded-xl shadow-2xl border border-gray-700 space-y-6 scroll-animate-blur"> 
+                    <div class="p-8">
                         <span class="inline-block bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">1순위</span>
-                        <h3 class="text-2xl font-bold text-white mb-2">기술 멘토링</h3>
-                        <p class="text-gray-400">정기적인 기술 자문: 코드 구조, DB 설계, AI 모델 고도화 방향성 등 (교수님의 Visual AI & R&D 경험 기반)</p>
+                        <h3 class="text-2xl font-bold text-white mb-2" id="ask-tech">기술 멘토링</h3>
+                        <p class="text-gray-400" id="ask-tech-desc">정기적인 기술 자문: 코드 구조, DB 설계, AI 모델 고도화 방향성 등 (교수님의 Visual AI & R&D 경험 기반)</p>
                     </div>
                     <hr class="border-gray-700">
                     <div>
-                        <span class="inline-block bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">선택</span>
-                        <h3 class="text-2xl font-bold text-white mb-2">연구 연계</h3>
-                        <p class="text-gray-400">캡스톤 디자인 / 학부 연구 연계 가능성 타진</p>
+                        <span class="inline-block bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2" id="ask-research-tag">선택</span>
+                        <h3 class="text-2xl font-bold text-white mb-2" id="ask-research">연구 연계</h3>
+                        <p class="text-gray-400" id="ask-research-desc">캡스톤 디자인 / 학부 연구 연계 가능성 타진</p>
                     </div>
                     <hr class="border-gray-700">
                     <div>
-                        <span class="inline-block bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">선택</span>
-                        <h3 class="text-2xl font-bold text-white mb-2">네트워크 활용</h3>
-                        <p class="text-gray-400">함께할 개발자/디자이너 추천, 교내 창업지원 프로그램 정보 및 연계</p>
+                        <span class="inline-block bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2" id="ask-network-tag">선택</span>
+                        <h3 class="text-2xl font-bold text-white mb-2" id="ask-network">네트워크 활용</h3>
+                        <p class="text-gray-400" id="ask-network-desc">함께할 개발자/디자이너 추천, 교내 창업지원 프로그램 정보 및 연계</p>
                     </div>
                 </div>
             </div>
@@ -409,24 +699,25 @@
     </main>
 
     <footer class="py-20 bg-gray-900 text-center px-4">
-        <div class="container mx-auto max-w-4xl scroll-animate"> <h2 class="text-4xl font-extrabold text-white mb-8">감사합니다.</h2>
+        <div class="container mx-auto max-w-4xl scroll-animate"> 
+            <h2 class="text-4xl font-extrabold text-white mb-8" id="ask-thanks">감사합니다.</h2>
             
             <div class="grid sm:grid-cols-2 gap-8 items-center bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700">
                 <div class="text-left">
                     <h3 class="text-3xl font-bold text-white mb-3">조민서</h3>
-                    <p class="text-lg text-gray-300 mb-4">KPGA 프로 / 'The Golf Code' 개발자</p>
+                    <p class="text-lg text-gray-300 mb-4" id="footer-pro">KPGA 프로 / 'The Golf Code' 개발자</p>
                     <ul class="space-y-2 text-gray-300">
-                        <li><span class="font-semibold text-emerald-400">Email:</span> navew_dk0927@naver.com</li>
-                        <li><span class="font-semibold text-emerald-400">Q&A:</span> 질문을 기다립니다.</li>
+                        <li><span class="font-semibold text-emerald-400" id="footer-email">Email:</span> Thegolfcode@gmail.com</li>
+                        <li><span class="font-semibold text-emerald-400" id="footer-qa">Q&A:</span> 질문을 기다립니다.</li>
                     </ul>
                 </div>
                 <div class="flex flex-col sm:flex-row justify-center gap-6">
                     <div class="text-center">
-                        <img src="https://placehold.co/150x150/111827/FFFFFF?text=Live+Demo+QR" alt="Live Demo QR Code" class="w-32 h-32 rounded-lg mx-auto">
+                        <img src="스윙 분석기 코드.png" alt="Live Demo QR Code" class="w-32 h-32 rounded-lg mx-auto">
                         <p class="mt-2 text-sm font-semibold text-emerald-400">Live Demo</p>
                     </div>
                     <div class="text-center">
-                        <img src="https://placehold.co/150x150/111827/FFFFFF?text=YouTube+QR" alt="YouTube QR Code" class="w-32 h-32 rounded-lg mx-auto">
+                        <img src="도전골퍼 코드.png" alt="YouTube QR Code" class="w-32 h-32 rounded-lg mx-auto">
                         <p class="mt-2 text-sm font-semibold text-emerald-400">'도전골퍼 조민서'</p>
                     </div>
                 </div>
@@ -434,6 +725,864 @@
             
             <p class="text-gray-600 mt-12 text-sm">&copy; 2025 The Golf Code by Minseo Cho. All rights reserved.</p>
         </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            let chartInitialized = false;
+            const chartCanvas = document.getElementById('handHeightChart');
+
+            // --- 1. 차트 그리기 함수 ---
+            const drawChart = () => {
+                if (chartInitialized) return; // 이미 그려졌으면 실행 안 함
+                chartInitialized = true;
+                
+                const ctx = chartCanvas.getContext('2d');
+                const gradientBackswing = ctx.createLinearGradient(0, 0, 0, 300);
+                gradientBackswing.addColorStop(0, 'rgba(5, 150, 105, 0.6)');
+                gradientBackswing.addColorStop(1, 'rgba(5, 150, 105, 0.05)');
+                const gradientDownswing = ctx.createLinearGradient(0, 0, 0, 300);
+                gradientDownswing.addColorStop(0, 'rgba(59, 130, 246, 0.6)');
+                gradientDownswing.addColorStop(1, 'rgba(59, 130, 246, 0.05)');
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Address', 'Takeaway', 'Halfway Back', 'Top', 'Halfway Down', 'Impact', 'Finish'],
+                        datasets: [
+                            { label: 'Backswing', data: [10, 20, 50, 80, null, null, null], borderColor: '#10B981', backgroundColor: gradientBackswing, fill: 'origin', tension: 0.3, pointBackgroundColor: '#10B981', pointBorderColor: '#ffffff', pointRadius: 4, pointHoverRadius: 6 },
+                            { label: 'Downswing', data: [null, null, null, 80, 45, 10, 75], borderColor: '#3B82F6', backgroundColor: gradientDownswing, fill: 'origin', tension: 0.3, pointBackgroundColor: '#3B82F6', pointBorderColor: '#ffffff', pointRadius: 4, pointHoverRadius: 6 }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        animation: { duration: 1500, easing: 'easeInOutQuad' }, // '그려지는' 애니메이션
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#9CA3AF' } },
+                            x: { grid: { display: false }, ticks: { color: '#9CA3AF' } }
+                        },
+                        plugins: {
+                            legend: { labels: { color: '#D1D5DB' } },
+                            tooltip: { enabled: false, mode: 'index', intersect: false, backgroundColor: 'rgba(31, 41, 55, 0.9)', titleColor: '#10B981', bodyColor: '#FFFFFF', borderColor: '#374151', borderWidth: 1, padding: 12, cornerRadius: 8 }
+                        },
+                        interaction: { mode: 'index', intersect: false },
+                    }
+                });
+            };
+
+            // --- 2. 숫자 카운트업 함수 ---
+            const animateCountUp = (el, target, duration = 1500) => {
+                let start = 0;
+                const startTime = performance.now();
+                el.innerHTML = `0<span class="text-3xl text-gray-400">/100</span>`;
+                const updateCount = (currentTime) => {
+                    const elapsedTime = currentTime - startTime;
+                    if (elapsedTime >= duration) {
+                        el.innerHTML = `${target}<span class="text-3xl text-gray-400">/100</span>`;
+                        return;
+                    }
+                    const progress = elapsedTime / duration;
+                    const current = Math.floor(target * progress);
+                    el.innerHTML = `${current}<span class="text-3xl text-gray-400">/100</span>`;
+                    requestAnimationFrame(updateCount);
+                };
+                requestAnimationFrame(updateCount);
+            };
+
+            // --- 3. 순차 애니메이션 함수 ---
+            const animateStaggered = (elements) => {
+                elements.forEach((el, index) => {
+                    el.classList.add('scroll-animate-stagger');
+                    setTimeout(() => {
+                        el.classList.add('is-visible');
+                    }, index * 150);
+                });
+            };
+
+            // --- 4. 네비게이션 메뉴 활성화 (Scroll Spy) 감시자 ---
+            const sections = document.querySelectorAll('main section[id]');
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            const activateNavLink = (id) => {
+                navLinks.forEach(link => {
+                    link.classList.remove('nav-active');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('nav-active');
+                    }
+                });
+            };
+            const scrollSpyObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        activateNavLink(entry.target.id);
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px' }); // 화면 정중앙 기준
+            sections.forEach(section => scrollSpyObserver.observe(section));
+
+
+            // --- 5. [통합] 모든 효과를 위한 메인 감시자 ---
+            const mainInteractionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+
+                    const target = entry.target;
+
+                    // [기본] 일반 섹션 애니메이션 (slide-up)
+                    if (target.matches('.scroll-animate')) {
+                        target.classList.add('is-visible');
+                        observer.unobserve(target);
+                    }
+                    
+                    // [기본] 일반 섹션 애니메이션 (blur)
+                    if (target.matches('.scroll-animate-blur')) {
+                        target.classList.add('is-visible');
+                        observer.unobserve(target);
+                    }
+
+                    // [고급] 차트 그리기
+                    if (target === chartCanvas) {
+                        drawChart();
+                        observer.unobserve(target);
+                    }
+                    
+                    // [고급] 숫자 카운트업
+                    if (target.matches('.text-6xl.font-extrabold')) {
+                        animateCountUp(target, 87);
+                        observer.unobserve(target);
+                    }
+                    
+                    // [고급] 솔루션 3개 카드 순차 애니메이션 (이제 4개로 변경)
+                    if (target.matches('#solution .grid.lg\\:grid-cols-3')) {
+                        const cards = target.querySelectorAll('#solution .grid.lg\\:grid-cols-3 > div:not(.lg\\:col-span-3)');
+                        animateStaggered(cards);
+                    }
+
+                    // [고급] 타임라인 아이템 순차 활성화
+                    if (target.matches('.timeline-item')) {
+                        target.classList.add('is-visible');
+                    }
+
+                    // [고급] 경쟁 우위 테이블 Row 순차 애니메이션
+                    if (target.matches('#competition tbody')) {
+                        const rows = target.querySelectorAll('tr');
+                        animateStaggered(rows);
+                        observer.unobserve(target);
+                    }
+
+                    // [고급] '1순위' 카드 하이라이트
+                    if (target.matches('#ask .bg-emerald-600')) {
+                        target.parentElement.classList.add('highlight-card-glow');
+                        observer.unobserve(target);
+                    }
+                });
+            }, { threshold: [0.1, 0.5] }); // 10% 또는 50% 보일 때 감지
+
+            // --- 6. [통합] 모든 감시 대상 등록 ---
+            // [기본] 애니메이션 대상
+            document.querySelectorAll('.scroll-animate, .scroll-animate-blur').forEach(el => mainInteractionObserver.observe(el));
+            // [고급] 차트
+            mainInteractionObserver.observe(chartCanvas);
+            // [고급] 카운트업 숫자
+            mainInteractionObserver.observe(document.querySelector('.text-6xl.font-extrabold'));
+            // [고급] 솔루션 카드 컨테이너 (이제 4개 카드를 포함)
+            mainInteractionObserver.observe(document.querySelector('#solution .grid.lg\\:grid-cols-3'));
+            // [고급] 타임라인 아이템
+            document.querySelectorAll('#roadmap .timeline-item').forEach(el => mainInteractionObserver.observe(el));
+            // [고급] 경쟁 테이블
+            mainInteractionObserver.observe(document.querySelector('#competition tbody'));
+            // [고급] 1순위 태그
+            mainInteractionObserver.observe(document.querySelector('#ask .bg-emerald-600'));
+
+
+            // --- 7. [수정 완료] 네비게이션 부드러운 스크롤링 ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+        });
+    </script>
+
+</body>
+</html>
+
+---
+
+## 🛠️ 다국어 처리 구현 (Final Code)
+
+**PL로서 지금 바로 복사하여 GitHub에 푸시(Push)해야 할 최종 코드입니다.**
+
+이 코드는 **언어 선택 드롭다운**을 추가하고, **모든 핵심 텍스트**에 `id`를 부여한 후, JavaScript 함수가 이 텍스트들을 **한국어/영어**로 교체하도록 완벽하게 구성되어 있습니다.
+
+### ⚠️ PL의 마지막 조치
+
+1.  **코드 복사:** 아래 코드를 **전체 복사**하여 GitHub의 `index.html` 파일에 **전부 덮어쓰기** 하십시오.
+2.  **Commit & Push:** 저장하고 GitHub에 푸시(Push)하십시오.
+3.  **명함 주문 집중:** 인쇄소에 **전화**하여 **PNG/JPG 파일 제출** 및 **납기일 확보**에 집중하십시오.
+
+```html
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Golf Code: AI, 골프의 '감'을 '코드'로 바꾸다</title>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <script src="[https://cdn.jsdelivr.net/npm/chart.js](https://cdn.jsdelivr.net/npm/chart.js)"></script>
+    <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap)" rel="stylesheet">
+    <style>
+        /* Inter 폰트 및 커스텀 스타일 적용 */
+        body {
+            font-family: 'Inter', 'Pretendard', sans-serif;
+            background-color: #111827; /* bg-gray-900 */
+            color: #F3F4F6; /* text-gray-100 */
+        }
+        /* Chart.js 툴팁 스타일 */
+        .chartjs-tooltip {
+            background: rgba(31, 41, 55, 0.8);
+            border-radius: 0.5rem;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+        /* 섹션별 헤더 스타일 */
+        .section-header {
+            @apply text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-4;
+        }
+        /* 수직 타임라인 스타일 */
+        .timeline-item {
+            @apply relative pl-8 pb-12;
+        }
+        .timeline-item:last-child {
+            @apply pb-0;
+        }
+        .timeline-connector {
+            @apply absolute left-3 top-1 w-0.5 h-full bg-gray-700;
+        }
+        .timeline-dot {
+            @apply absolute left-0 top-1 w-6 h-6 rounded-full bg-emerald-500 border-4 border-gray-900;
+        }
+
+        /* -------------------------------------------------
+         * [통합] UI/UX 고도화 애니메이션 CSS
+         * -------------------------------------------------
+        */
+
+        /* A. 스크롤 애니메이션 기본 (고급 이징 적용) */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out, transform 0.8s ease-in-out;
+        }
+        .scroll-animate-blur {
+            opacity: 0;
+            filter: blur(5px);
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out, transform 0.8s ease-in-out;
+        }
+        
+        .scroll-animate.is-visible,
+        .scroll-animate-blur.is-visible {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        /* B. 순차적(Staggered) 애니메이션용 */
+        .scroll-animate-stagger {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .scroll-animate-stagger.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* C. 네비게이션 (Scroll Spy) 활성화 스타일 */
+        nav a.nav-active {
+            color: #10B981; /* text-emerald-400 */
+            font-weight: 600; /* semibold */
+        }
+
+        /* D. 로드맵 타임라인 활성화 효과 */
+        .timeline-item.is-visible .timeline-dot {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px #10B981;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+
+        /* E. #ask 섹션 1순위 카드 하이라이트 */
+        @keyframes subtle-glow {
+            0% { box-shadow: 0 0 16px rgba(16, 185, 129, 0.3); } /* 10B981 with opacity */
+            50% { box-shadow: 0 0 24px rgba(16, 185, 129, 0.7); }
+            100% { box-shadow: 0 0 16px rgba(16, 185, 129, 0.3); }
+        }
+        .highlight-card-glow {
+            animation: subtle-glow 3s infinite ease-in-out;
+            border-color: #10B981;
+        }
+
+        /* F. 테이블 스크롤바 숨김 (기본) 및 필요시 표시 */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+    </style>
+    <script>
+        const translations = {
+            'ko': {
+                'title': "The Golf Code: AI, 골프의 '감'을 '코드'로 바꾸다",
+                'hero-title': "AI, 골프의 '감(感)'을 '코드'로 바꾸다",
+                'hero-subtitle': "KPGA 프로가 직접 개발한 데이터 기반 스윙 분석 및 코칭 플랫폼",
+                
+                'nav-problem': "문제 정의",
+                'nav-solution': "솔루션",
+                'nav-tech': "기술 스택",
+                'nav-roadmap': "로드맵",
+                'nav-ask': "The Ask",
+
+                'problem-header': "왜 우리는 매일 연습해도<br>제자리걸음일까요?",
+                'limit-h3': "KPGA 프로로서 느낀 한계",
+                'limit-li1': "투어 성적의 벽, 끊임없는 스윙 교정의 어려움",
+                'limit-li2': "\"내 스윙의 문제를 '감'이 아닌 객관적인 데이터로 보고 싶다!\"",
+                'amateur-h3': "아마추어 골퍼의 현실",
+                'amateur-li1': "정보 비대칭:",
+                'amateur-li2': "고가의 레슨 없이는 정확한 피드백 부재",
+                'amateur-li3': "잘못된 연습:",
+                'amateur-li4': "감에 의존 → 잘못된 습관 고착화 → 실력 정체, 흥미 저하",
+                
+                'solution-header': "Solution: 당신의 스윙 코드를 해독하다",
+                'solution-subtitle': "'The Golf Code' (v0.1) - 영상만 올리면, AI가 당신의 스윙 데이터를 시각적으로 분석해 드립니다.",
+                'sol-ai-title': "AI 자동 분석",
+                'sol-ai-desc': "MediaPipe 기반 자세 추정을 통해 스윙의 모든 관절을 정밀하게 트래킹합니다.",
+                'sol-visual-title': "핵심 문제 시각화",
+                'sol-visual-desc': "머리 움직임(원), 손 궤적(곡선), 스윙 플레인(선) 등 핵심 문제를 직관적으로 보여줍니다.",
+                'sol-score-title': "자세 안정성 점수 & 개선 방향",
+                'sol-score-desc': "AI가 분석한 당신의 스윙 안정성을 점수로 보여드립니다.",
+                'sol-report-title': "데이터 리포트",
+                'sol-report-desc': "스윙의 일관성과 안정성을 데이터로 정량화하여 리포트를 제공합니다.",
+                'sol-score-label': "자세 안정성 점수",
+                'sol-livedemo-title': "Live Demo",
+                'sol-livedemo-desc': "QR 코드를 스캔하거나 아래 링크를 방문해 직접 체험해 보세요.",
+                'chart-title': "손 높이 그래프 (Backswing vs Downswing)",
+
+                'tech-header': "From Scratch:<br>골프 프로, 코드를 배우다",
+                'tech-subtitle': "\"필드의 문제를 해결하기 위해, 직접 기술을 연마했습니다.\"",
+                'tech-h3': "사용한 핵심 기술:",
+                'tech-ul-h3': "개발 과정 하이라이트:",
+                'tech-li1-strong': "아이디어 구체화:",
+                'tech-li1-span': "KPGA 프로 경험 기반 핵심 분석 지표 정의",
+                'tech-li2-strong': "기술 학습 & 구현:",
+                'tech-li2-span': "비전공자로서 Python, AI 라이브러리 학습 및 프로토타입 개발",
+                'tech-li3-strong': "문제 해결 & 개선:",
+                'tech-li3-span': "화면 떨림 버그(v15) 해결, 사용자 피드백 기반 시각화 개선(v17) → 실행력 증명",
+
+                'comp-header': "Why 'The Golf Code'? 우리의 차별점",
+                'comp-subtitle': "\"우리는 단순 분석기가 아닌, 당신의 잠재력을 코드로 풀어내는 성장 파트너입니다.\"",
+                'comp-col1': "구분",
+                'comp-col2': "기존 솔루션 (레슨, 앱)",
+                'comp-col3': "The Golf Code",
+                'comp-row1-th': "분석 주체",
+                'comp-row1-td2': "코치의 주관적 판단 / AI의 '결과' 통보",
+                'comp-row1-td3': "KPGA 프로의 통찰력 + AI의 객관적 데이터",
+                'comp-row2-th': "피드백 방식",
+                'comp-row2-td2': "말 또는 단순 텍스트",
+                'comp-row2-td3': "데이터 기반 시각화 ('왜'인지 증명)",
+                'comp-row3-th': "핵심 가치",
+                'comp-row3-td2': "단발성 레슨 / 범용 분석 기능",
+                'comp-row3-td3': "지속 가능한 '성장 경험' 설계 (개인화, 게임화)",
+
+                'roadmap-header': "From MVP to Platform: 우리의 성장 로드맵",
+                'roadmap-subtitle': "단기 검증을 거쳐, 골퍼를 위한 필수 성장 플랫폼으로 나아갑니다.",
+                'roadmap-h3-1': "시장 검증 계획 (단기: ~3개월)",
+                'roadmap-h3-2': "성장 로드맵",
+                'roadmap-li1-h4': "10명 심층 인터뷰",
+                'roadmap-li1-p': "핵심 가치 및 지불 의향(WTP) 검증 (NPS, 가짜 문 테스트 전환율 목표 설정)",
+                'roadmap-li2-h4': "'가짜 문' 테스트 실행",
+                'roadmap-li2-p': "핵심 유료 기능에 대한 시장 수요(관심도)를 정량적 데이터(전환율 %)로 측정)",
+                'roadmap-li3-h4': "사용 데이터 초기 분석",
+                'roadmap-li3-p': "실제 사용 패턴을 파악하고, 어떤 문제점을 가진 사용자들이 우리 앱을 주로 사용하는지 초기 사용자 페르소나 정의)",
+                'roadmap-ul1-h4': "MVP (~6개월)",
+                'roadmap-ul1-p': "'자세 안정성 분석' MVP 고도화 (웹), 초기 사용자 확보",
+                'roadmap-ul2-h4': "V2 (~1년)",
+                'roadmap-ul2-p': "핵심 팀 빌딩 (앱 개발자, 디자이너), Firebase 기반 정식 앱 런칭, '성장 기록 & 게임화' 도입",
+                'roadmap-ul3-h4': "V3 (1년~)",
+                'roadmap-ul3-p': "자체 딥러닝 모델 개발 (스윙 DNA, 클럽 패스 추정 등), O2O 코치 매칭 플랫폼 확장",
+
+                'ask-header': "함께 'The Golf Code'를 완성할<br>조력자를 찾습니다",
+                'ask-subtitle': "\"기술적 깊이를 더하고, 지속 가능한 성장을 위한 발판을 마련하고 싶습니다.\"",
+                'ask-tech': "기술 멘토링",
+                'ask-tech-desc': "정기적인 기술 자문: 코드 구조, DB 설계, AI 모델 고도화 방향성 등 (교수님의 Visual AI & R&D 경험 기반)",
+                'ask-research': "연구 연계",
+                'ask-research-desc': "캡스톤 디자인 / 학부 연구 연계 가능성 타진",
+                'ask-network': "네트워크 활용",
+                'ask-network-desc': "함께할 개발자/디자이너 추천, 교내 창업지원 프로그램 정보 및 연계",
+                'ask-thanks': "감사합니다.",
+                'footer-pro': "KPGA 프로 / 'The Golf Code' 개발자",
+                'footer-email': "Email:",
+                'footer-qa': "Q&A: 질문을 기다립니다."
+            }
+        };
+
+        // 이 함수는 페이지 로드 시 또는 언어 선택 시 호출됩니다.
+        function setLanguage(lang) {
+            const texts = translations[lang];
+            
+            // HTML 언어 속성 변경 (접근성)
+            document.documentElement.lang = lang;
+
+            // 1. Title 태그 변경
+            document.title = texts['title'];
+
+            // 2. Navigation 텍스트 변경
+            document.getElementById('nav-problem').textContent = texts['nav-problem'];
+            document.getElementById('nav-solution').textContent = texts['nav-solution'];
+            document.getElementById('nav-tech').textContent = texts['nav-tech'];
+            document.getElementById('nav-roadmap').textContent = texts['nav-roadmap'];
+            document.getElementById('nav-ask').textContent = texts['nav-ask'];
+            
+            // 3. Hero 섹션 텍스트 변경
+            document.getElementById('hero-main-title').innerHTML = texts['hero-title'];
+            document.getElementById('hero-sub-text').textContent = texts['hero-subtitle'];
+            
+            // 4. Problem 섹션 텍스트 변경
+            document.getElementById('problem-main-header').innerHTML = texts['problem-header'];
+            document.getElementById('limit-h3').textContent = texts['limit-title'];
+            document.getElementById('limit-li1').textContent = texts['limit-li1'];
+            document.getElementById('limit-li2').textContent = texts['limit-li2'];
+            document.getElementById('amateur-h3').textContent = texts['amateur-h3'];
+            document.getElementById('amateur-li1-span').textContent = texts['amateur-li1'];
+            document.getElementById('amateur-li2-span').textContent = texts['amateur-li2']; // 이전에 <li>에 span이 없었음.
+            document.getElementById('amateur-li3-span').textContent = texts['amateur-li3'];
+            document.getElementById('amateur-li4-span').textContent = texts['amateur-li4']; // 이전에 <li>에 span이 없었음.
+
+
+            // 5. Solution 섹션 텍스트 변경
+            document.getElementById('solution-header').innerHTML = texts['solution-header'];
+            document.getElementById('solution-subtitle').textContent = texts['solution-subtitle'];
+
+            document.getElementById('sol-ai-title').textContent = texts['sol-ai-title'];
+            document.getElementById('sol-ai-desc').textContent = texts['sol-ai-desc'];
+
+            document.getElementById('sol-visual-title').textContent = texts['sol-visual-title'];
+            document.getElementById('sol-visual-desc').textContent = texts['sol-visual-desc'];
+
+            document.getElementById('sol-score-title').textContent = texts['sol-score-title'];
+            document.getElementById('sol-score-desc').textContent = texts['sol-score-desc'];
+            
+            document.getElementById('sol-report-title').textContent = texts['sol-report-title'];
+            document.getElementById('sol-report-desc').textContent = texts['sol-report-desc'];
+            document.getElementById('sol-score-label').textContent = texts['sol-score-label'];
+            document.getElementById('sol-livedemo-title').textContent = texts['sol-livedemo-title'];
+            document.getElementById('sol-livedemo-desc').textContent = texts['sol-livedemo-desc'];
+            document.getElementById('chart-title').textContent = texts['chart-title'];
+
+            // 6. Tech 섹션 텍스트 변경
+            document.getElementById('tech-header').innerHTML = texts['tech-header'];
+            document.getElementById('tech-subtitle').textContent = texts['tech-subtitle'];
+            document.getElementById('tech-h3').textContent = texts['tech-h3'];
+            document.getElementById('tech-ul-h3').textContent = texts['tech-ul-h3'];
+            document.getElementById('tech-li1-strong').textContent = texts['tech-li1-strong'];
+            document.getElementById('tech-li1-span').textContent = texts['tech-li1-span'];
+            document.getElementById('tech-li2-strong').textContent = texts['tech-li2-strong'];
+            document.getElementById('tech-li2-span').textContent = texts['tech-li2-span'];
+            document.getElementById('tech-li3-strong').textContent = texts['tech-li3-strong'];
+            document.getElementById('tech-li3-span').textContent = texts['tech-li3-span'];
+
+            // 7. Competition 섹션 텍스트 변경
+            document.getElementById('comp-header').innerHTML = texts['comp-header'];
+            document.getElementById('comp-subtitle').textContent = texts['comp-subtitle'];
+            document.getElementById('comp-col1').textContent = texts['comp-col1'];
+            document.getElementById('comp-col2').textContent = texts['comp-col2'];
+            document.getElementById('comp-col3').textContent = texts['comp-col3'];
+            document.getElementById('comp-row1-th').textContent = texts['comp-row1-th'];
+            document.getElementById('comp-row1-td2').textContent = texts['comp-row1-td2'];
+            document.getElementById('comp-row1-td3').textContent = texts['comp-row1-td3'];
+            document.getElementById('comp-row2-th').textContent = texts['comp-row2-th'];
+            document.getElementById('comp-row2-td2').textContent = texts['comp-row2-td2'];
+            document.getElementById('comp-row2-td3').textContent = texts['comp-row2-td3'];
+            document.getElementById('comp-row3-th').textContent = texts['comp-row3-th'];
+            document.getElementById('comp-row3-td2').textContent = texts['comp-row3-td2'];
+            document.getElementById('comp-row3-td3').textContent = texts['comp-row3-td3'];
+
+
+            // 8. Roadmap 섹션 텍스트 변경
+            document.getElementById('roadmap-header').innerHTML = texts['roadmap-header'];
+            document.getElementById('roadmap-subtitle').textContent = texts['roadmap-subtitle'];
+            document.getElementById('roadmap-h3-1').textContent = texts['roadmap-h3-1'];
+            document.getElementById('roadmap-h3-2').textContent = texts['roadmap-h3-2'];
+            document.getElementById('roadmap-li1-h4').textContent = texts['roadmap-li1-h4'];
+            document.getElementById('roadmap-li1-p').textContent = texts['roadmap-li1-p'];
+            document.getElementById('roadmap-li2-h4').textContent = texts['roadmap-li2-h4'];
+            document.getElementById('roadmap-li2-p').textContent = texts['roadmap-li2-p'];
+            document.getElementById('roadmap-li3-h4').textContent = texts['roadmap-li3-h4'];
+            document.getElementById('roadmap-li3-p').textContent = texts['roadmap-li3-p'];
+            document.getElementById('roadmap-ul1-h4').textContent = texts['roadmap-ul1-h4'];
+            document.getElementById('roadmap-ul1-p').textContent = texts['roadmap-ul1-p'];
+            document.getElementById('roadmap-ul2-h4').textContent = texts['roadmap-ul2-h4'];
+            document.getElementById('roadmap-ul2-p').textContent = texts['roadmap-ul2-p'];
+            document.getElementById('roadmap-ul3-h4').textContent = texts['roadmap-ul3-h4'];
+            document.getElementById('roadmap-ul3-p').textContent = texts['roadmap-ul3-p'];
+
+
+            // 9. Ask 섹션 텍스트 변경
+            document.getElementById('ask-header').innerHTML = texts['ask-header'];
+            document.getElementById('ask-subtitle').textContent = texts['ask-subtitle'];
+            document.getElementById('ask-tech').textContent = texts['ask-tech'];
+            document.getElementById('ask-tech-desc').textContent = texts['ask-tech-desc'];
+            document.getElementById('ask-research').textContent = texts['ask-research'];
+            document.getElementById('ask-research-desc').textContent = texts['ask-research-desc'];
+            document.getElementById('ask-network').textContent = texts['ask-network'];
+            document.getElementById('ask-network-desc').textContent = texts['ask-network-desc'];
+            document.getElementById('ask-thanks').textContent = texts['ask-thanks'];
+
+            // 10. Footer 텍스트 변경
+            document.getElementById('footer-pro').textContent = texts['footer-pro'];
+            document.getElementById('footer-email').textContent = texts['footer-email'];
+            document.getElementById('footer-qa').textContent = texts['footer-qa'];
+        }
+
+        // 페이지 로드 시 기본 언어 설정 및 드롭다운 초기값 설정
+        document.addEventListener('DOMContentLoaded', () => {
+             const langSwitcher = document.getElementById('language-switcher');
+             if (langSwitcher) {
+                 // 드롭다운의 초기값을 가져와서 설정합니다.
+                 const initialLang = langSwitcher.value || 'ko';
+                 setLanguage(initialLang);
+                 
+                 // 드롭다운 변경 이벤트 리스너 추가
+                 langSwitcher.addEventListener('change', (e) => {
+                     setLanguage(e.target.value);
+                 });
+             } else {
+                 // 드롭다운이 없을 경우 기본 언어 설정
+                 setLanguage('ko');
+             }
+        });
+    </script>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-900/80 backdrop-blur-md sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-white">
+                <span class="text-emerald-400">The</span> Golf Code
+            </h1>
+            
+            <div class="flex space-x-6 items-center">
+                <select id="language-switcher" class="bg-gray-700 text-white rounded px-2 py-1 text-sm cursor-pointer">
+                    <option value="ko">한국어</option>
+                    <option value="en">English</option>
+                </select>
+
+                <div class="hidden md:flex space-x-6">
+                    <a href="#problem" class="text-gray-300 hover:text-emerald-400 transition duration-300" id="nav-problem">문제 정의</a>
+                    <a href="#solution" class="text-gray-300 hover:text-emerald-400 transition duration-300" id="nav-solution">솔루션</a>
+                    <a href="#tech" class="text-gray-300 hover:text-emerald-400 transition duration-300" id="nav-tech">기술 스택</a>
+                    <a href="#roadmap" class="text-gray-300 hover:text-emerald-400 transition duration-300" id="nav-roadmap">로드맵</a>
+                    <a href="#ask" class="text-gray-300 hover:text-emerald-400 transition duration-300" id="nav-ask">The Ask</a>
+                </div>
+            </div>
+            </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden px-4">
+            <div class="absolute inset-0 z-0">
+                <img src="[https://placehold.co/1920x1080/000000/111827?text=Golf+Swing+%26+App+UI](https://placehold.co/1920x1080/000000/111827?text=Golf+Swing+%26+App+UI)" 
+                     alt="골프 스윙과 앱 분석 화면" 
+                     class="w-full h-full object-cover opacity-30 blur-sm">
+                <div class="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-gray-900"></div>
+            </div>
+            
+            <div class="relative z-10 p-8 max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl lg:text-5xl font-extrabold text-white mb-7">
+                    The Golf Code:
+                    <br>
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400" id="hero-main-title">
+                        AI, 골프의 '감(感)'을 '코드'로 바꾸다
+                    </span>
+                </h1>
+                <p class="text-lg md:text-2xl text-gray-300 mb-12" id="hero-sub-text">
+                    KPGA 프로가 직접 개발한 데이터 기반 스윙 분석 및 코칭 플랫폼
+                </p>
+                
+                <div class="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 max-w-md mx-auto text-left shadow-2xl border border-gray-700">
+                    <h3 class="text-2xl font-bold text-white mb-3">조민서</h3>
+                    <ul class="space-y-2 text-gray-200">
+                        <li><span class="font-semibold text-emerald-400">소속:</span> 용인대학교 골프학과 / KPGA 프로</li>
+                        <li><span class="font-semibold text-emerald-400">채널:</span> 크리에이터 '도전골퍼 조민서'</li>
+                        <li><span class="font-semibold text-emerald-400">수상:</span> LG U+ & YouTube '유쓰 쇼츠 페스티벌' 대상</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem" class="py-20 md:py-32 bg-gray-900 px-4">
+            <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
+                <div class="pr-0 md:pr-8 scroll-animate"> 
+                    <h2 class="section-header" id="problem-main-header">"왜 우리는 매일 연습해도<br>제자리걸음일까요?"</h2>
+                    <div class="space-y-6 text-gray-300 text-lg">
+                        <div>
+                            <h3 class="font-bold text-xl text-white mb-2" id="limit-h3">KPGA 프로로서 느낀 한계</h3>
+                            <ul class="list-disc list-outside ml-5 space-y-1 text-gray-400">
+                                <li id="limit-li1">투어 성적의 벽, 끊임없는 스윙 교정의 어려움</li>
+                                <li id="limit-li2">"내 스윙의 문제를 '감'이 아닌 객관적인 데이터로 보고 싶다!"</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-white mb-2" id="amateur-h3">아마추어 골퍼의 현실</h3>
+                            <ul class="list-disc list-outside ml-5 space-y-1 text-gray-400">
+                                <li><span class="font-semibold text-gray-200" id="amateur-li1-span">정보 비대칭:</span> <span id="amateur-li2-span">고가의 레슨 없이는 정확한 피드백 부재</span></li>
+                                <li><span class="font-semibold text-gray-200" id="amateur-li3-span">잘못된 연습:</span> <span id="amateur-li4-span">감에 의존 → 잘못된 습관 고착화 → 실력 정체, 흥미 저하</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-2xl scroll-animate-blur"> <img src="Gemini_Generated_Image_a90j1na90j1na90j (1).png" 
+                         alt="연습장에서 좌절하는 골퍼"
+                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-20 md:py-32 bg-gray-800 px-4">
+            <div class="container mx-auto max-w-7xl">
+                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate"> 
+                    <h2 class="section-header" id="solution-header">Solution: 당신의 스윙 코드를 해독하다</h2>
+                    <p class="text-xl text-gray-300" id="solution-subtitle">'The Golf Code' (v0.1) - 영상만 올리면, AI가 당신의 스윙 데이터를 시각적으로 분석해 드립니다.</p>
+                </div>
+                
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-3" id="sol-ai-title">AI 자동 분석</h3>
+                        <p class="text-gray-400 mb-4" id="sol-ai-desc">MediaPipe 기반 자세 추정을 통해 스윙의 모든 관절을 정밀하게 트래킹합니다.</p>
+                        <img src="AI Joint Tracking (v17).png" alt="관절 추적 영상 캡처" class="w-full rounded-lg object-cover">
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-3" id="sol-visual-title">핵심 문제 시각화</h3>
+                        <p class="text-gray-400 mb-4" id="sol-visual-desc">머리 움직임(원), 손 궤적(곡선), 스윙 플레인(선) 등 핵심 문제를 직관적으로 보여줍니다.</p>
+                        <img src="Head Sway & Hand Path.png" alt="머리 원과 손 경로 스크린샷" class="w-full rounded-lg object-cover">
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-3" id="sol-score-title">자세 안정성 점수 & 개선 방향</h3>
+                        <p class="text-gray-400 mb-4" id="sol-score-desc">AI가 분석한 당신의 스윙 안정성을 점수로 보여드립니다.</p>
+                        <img src="Gemini_Generated9dzl.PNG" alt="자세 안정성 점수 및 개선 방향 이미지" class="w-full rounded-lg object-cover">
+                    </div>
+
+
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700 lg:col-span-3">
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-3" id="sol-report-title">데이터 리포트</h3>
+                                <p class="text-gray-400 mb-6" id="sol-report-desc">스윙의 일관성과 안정성을 데이터로 정량화하여 리포트를 제공합니다.</p>
+                                <div class="bg-gray-800 p-6 rounded-lg mb-6">
+                                    <span class="text-sm font-semibold text-emerald-400 uppercase" id="sol-score-label">자세 안정성 점수</span>
+                                    <p class="text-6xl font-extrabold text-white">0<span class="text-3xl text-gray-400">/100</span></p>
+                                </div>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <img src="[https://placehold.co/150x150/111827/FFFFFF?text=Live+Demo+QR](https://placehold.co/150x150/111827/FFFFFF?text=Live+Demo+QR)" alt="Live Demo QR Code" class="w-32 h-32 rounded-lg">
+                                    <div>
+                                        <h4 class="font-semibold text-white" id="sol-livedemo-title">Live Demo</h4>
+                                        <p class="text-gray-400 text-sm" id="sol-livedemo-desc">QR 코드를 스캔하거나 아래 링크를 방문해 직접 체험해 보세요.</p>
+                                        <a href="[https://huggingface.co/spaces/Cminseo/golf-analyzer](https://huggingface.co/spaces/Cminseo/golf-analyzer)" target="_blank" class="text-emerald-400 hover:text-emerald-300 break-all text-sm">huggingface.co/spaces/Cminseo/golf-analyzer</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-800 p-4 rounded-lg">
+                                <h4 class="text-center font-semibold text-white mb-2" id="chart-title">손 높이 그래프 (Backswing vs Downswing)</h4>
+                                <canvas id="handHeightChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="tech" class="py-20 md:py-32 bg-gray-900 px-4">
+            <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
+                <div class="rounded-xl overflow-hidden shadow-2xl order-last md:order-first scroll-animate-blur"> <img src="Gemini_Generated_Image_i4xy8yi4xy8yi4xy.png" 
+                         alt="코딩하는 모습 또는 Hugging Face 배포 화면"
+                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                </div>
+                
+                <div class="pl-0 md:pl-8 scroll-animate"> 
+                    <h2 class="section-header" id="tech-header">From Scratch:<br>골프 프로, 코드를 배우다</h2>
+                    <p class="text-xl text-gray-300 mb-8" id="tech-subtitle">"필드의 문제를 해결하기 위해, 직접 기술을 연마했습니다."</p>
+                    
+                    <div class="mb-8">
+                        <h3 class="font-bold text-lg text-white mb-3" id="tech-h3">사용한 핵심 기술:</h3>
+                        <div class="flex space-x-4">
+                            <span class="bg-yellow-400 text-yellow-900 text-sm font-bold px-3 py-1 rounded-full">[Python]</span>
+                            <span class="bg-red-400 text-red-900 text-sm font-bold px-3 py-1 rounded-full">[Streamlit]</span>
+                            <span class="bg-blue-400 text-blue-900 text-sm font-bold px-3 py-1 rounded-full">[MediaPipe]</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-lg text-white mb-3" id="tech-ul-h3">개발 과정 하이라이트:</h3>
+                        <ul class="list-none space-y-3 text-gray-400">
+                            <li class="flex items-start">
+                                <span class="text-emerald-400 font-bold mr-2">✔</span>
+                                <div><strong class="text-gray-200" id="tech-li1-strong">아이디어 구체화:</strong> <span id="tech-li1-span">KPGA 프로 경험 기반 핵심 분석 지표 정의</span></div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-400 font-bold mr-2">✔</span>
+                                <div><strong class="text-gray-200" id="tech-li2-strong">기술 학습 & 구현:</strong> <span id="tech-li2-span">비전공자로서 Python, AI 라이브러리 학습 및 프로토타입 개발</span></div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-400 font-bold mr-2">✔</span>
+                                <div><strong class="text-gray-200" id="tech-li3-strong">문제 해결 & 개선:</strong> <span id="tech-li3-span">화면 떨림 버그(v15) 해결, 사용자 피드백 기반 시각화 개선(v17) → 실행력 증명</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="competition" class="py-20 md:py-32 bg-gray-800 px-4">
+            <div class="container mx-auto max-w-5xl">
+                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate"> 
+                    <h2 class="section-header" id="comp-header">Why 'The Golf Code'? 우리의 차별점</h2>
+                    <p class="text-xl text-gray-300" id="comp-subtitle">"우리는 단순 분석기가 아닌, 당신의 잠재력을 코드로 풀어내는 성장 파트너입니다."</p>
+                </div>
+
+                <div class="overflow-x-hidden hover:overflow-x-auto lg:overflow-x-auto hide-scrollbar shadow-2xl rounded-xl border border-gray-700">
+                    <table class="w-full min-w-lg text-left text-gray-300">
+                        <thead class="bg-gray-900 text-sm text-emerald-400 uppercase">
+                            <tr>
+                                <th scope="col" class="px-6 py-4 font-semibold" id="comp-col1">구분</th>
+                                <th scope="col" class="px-6 py-4 font-semibold" id="comp-col2">기존 솔루션 (레슨, 앱)</th>
+                                <th scope="col" class="px-6 py-4 font-semibold bg-emerald-900/50" id="comp-col3">The Golf Code</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <tr class="bg-gray-800 hover:bg-gray-700/50 transition">
+                                <th scope="row" class="px-6 py-5 font-semibold text-white whitespace-nowrap" id="comp-row1-th">분석 주체</th>
+                                <td class="px-6 py-5" id="comp-row1-td2">코치의 주관적 판단 / AI의 '결과' 통보</td>
+                                <td class="px-6 py-5 font-bold text-emerald-300 bg-gray-800/50" id="comp-row1-td3">KPGA 프로의 통찰력 + AI의 객관적 데이터</td>
+                            </tr>
+                            <tr class="bg-gray-800 hover:bg-gray-700/50 transition">
+                                <th scope="row" class="px-6 py-5 font-semibold text-white whitespace-nowrap" id="comp-row2-th">피드백 방식</th>
+                                <td class="px-6 py-5" id="comp-row2-td2">말 또는 단순 텍스트</td>
+                                <td class="px-6 py-5 font-bold text-emerald-300 bg-gray-800/50" id="comp-row2-td3">데이터 기반 시각화 ('왜'인지 증명)</td>
+                            </tr>
+                            <tr class="bg-gray-800 hover:bg-gray-700/50 transition">
+                                <th scope="row" class="px-6 py-5 font-semibold text-white whitespace-nowrap" id="comp-row3-th">핵심 가치</th>
+                                <td class="px-6 py-5" id="comp-row3-td2">단발성 레슨 / 범용 분석 기능</td>
+                                <td class="px-6 py-5 font-bold text-emerald-300 bg-gray-800/50" id="comp-row3-td3">지속 가능한 '성장 경험' 설계 (개인화, 게임화)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <section id="roadmap" class="py-20 md:py-32 bg-gray-900 px-4">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate"> 
+                    <h2 class="section-header" id="roadmap-header">From MVP to Platform: 우리의 성장 로드맵</h2>
+                    <p class="text-xl text-gray-300" id="roadmap-subtitle">단기 검증을 거쳐, 골퍼를 위한 필수 성장 플랫폼으로 나아갑니다.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700 scroll-animate-blur"> 
+                        <h3 class="text-2xl font-bold text-white mb-6" id="roadmap-h3-1">시장 검증 계획 (단기: ~3개월)</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <span class="text-2xl mr-4">1️⃣</span>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-emerald-400" id="roadmap-li1-h4">10명 심층 인터뷰</h4>
+                                    <p class="text-gray-400" id="roadmap-li1-p">핵심 가치 및 지불 의향(WTP) 검증 (NPS, 가짜 문 테스트 전환율 목표 설정)</p>
+                                </div>
+                            </div>
+
+                             <div class="flex items-start">
+                                <span class="text-2xl mr-4">2️⃣</span>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-emerald-400" id="roadmap-li2-h4">'가짜 문' 테스트 실행</h4>
+                                    <p class="text-gray-400" id="roadmap-li2-p">핵심 유료 기능에 대한 시장 수요(관심도)를 정량적 데이터(전환율 %)로 측정)</p>
+                                </div>
+                             </div>
+
+                             <div class="flex items-start">
+                                <span class="text-2xl mr-4">3️⃣</span>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-emerald-400" id="roadmap-li3-h4">사용 데이터 초기 분석</h4>
+                                    <p class="text-gray-400" id="roadmap-li3-p">실제 사용 패턴을 파악하고, 어떤 문제점을 가진 사용자들이 우리 앱을 주로 사용하는지 초기 사용자 페르소나 정의)</p>
+                                </div>
+                             </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700 scroll-animate"> 
+                        <h3 class="text-2xl font-bold text-white mb-8" id="roadmap-h3-2">성장 로드맵</h3>
+                        <div class="relative">
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-connector"></div>
+                                <h4 class="text-lg font-semibold text-white mb-1" id="roadmap-ul1-h4">MVP (~6개월)</h4>
+                                <p class="text-gray-400" id="roadmap-ul1-p">'자세 안정성 분석' MVP 고도화 (웹), 초기 사용자 확보</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-connector"></div>
+                                <h4 class="text-lg font-semibold text-white mb-1" id="roadmap-ul2-h4">V2 (~1년)</h4>
+                                <p class="text-gray-400" id="roadmap-ul2-p">핵심 팀 빌딩 (앱 개발자, 디자이너), Firebase 기반 정식 앱 런칭, '성장 기록 & 게임화' 도입</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h4 class="text-lg font-semibold text-white mb-1" id="roadmap-ul3-h4">V3 (1년~)</h4>
+                                <p class="text-gray-400" id="roadmap-ul3-p">자체 딥러닝 모델 개발 (스윙 DNA, 클럽 패스 추정 등), O2O 코치 매칭 플랫폼 확장</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ask" class="py-20 md:py-32 bg-gray-800 px-4">
+            <div class="container mx-auto max-w-3xl text-center">
+                <div class="scroll-animate"> 
+                    <h2 class="section-header" id="ask-header">함께 'The Golf Code'를 완성할<br>조력자를 찾습니다</h2>
+                    <p class="text-xl text-gray-300 mb-12" id="ask-subtitle">"기술적 깊이를 더하고, 지속 가능한 성장을 위한 발판을 마련하고 싶습니다."</p>
+                </div>
+                
+                <div class="text-left bg-gray-900 p-8 md:p-12 rounded-xl shadow-2xl border border-gray-700 space-y-6 scroll-animate-blur"> 
+                    <div class="p-8">
+                        <span class="inline-block bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">1순위</span>
+                        <h3 class="text-2xl font-bold text-white mb-2" id="ask-tech">기술 멘토링</h3>
+                        <p class="text-gray-400" id="ask-tech-desc">정기적인 기술 자문: 코드 구조, DB 설계, AI 모델 고도화 방향성 등 (교수님의 Visual AI & R&D 경험 기반)</p>
+                    </div>
+                    <hr class="border-gray-700">
+                    <div>
+                        <span class="inline-block bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2" id="ask-research-tag">선택</span>
+                        <h3 class="text-2xl font-bold text-white mb-2" id="ask-research">연구 연계</h3>
+                        <p class="text-gray-400" id="ask-research-desc">캡스톤 디자인 / 학부 연구 연계 가능성 타진</p>
+                    </div>
+                    <hr class="border-gray-700">
+                    <div>
+                        <span class="inline-block bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2" id="ask-network-tag">선택</span>
+                        <h3 class="text-2xl font-bold text-white mb-2" id="ask-network">네트워크 활용</h3>
+                        <p class="text-gray-400" id="ask-network-desc">함께할 개발자/디자이너 추천, 교내 창업지원 프로그램 정보 및 연계</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </footer>
 
     <script>
@@ -562,7 +1711,7 @@
                         observer.unobserve(target);
                     }
                     
-                    // [고급] 솔루션 3개 카드 순차 애니메이션 (이제 4개로 변경)
+                    // [고급] 솔루션 3개 카드 순차 애니메이션 (이제 4개 카드를 포함)
                     if (target.matches('#solution .grid.lg\\:grid-cols-3')) {
                         const cards = target.querySelectorAll('#solution .grid.lg\\:grid-cols-3 > div:not(.lg\\:col-span-3)');
                         animateStaggered(cards);
@@ -624,11 +1773,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
